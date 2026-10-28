@@ -32,6 +32,9 @@ declare __formatter_list_started=false
 # [internal constant, do not change]
 declare __formatter_list_style=bullet
 
+# [internal constant, do not change]
+declare __formatter_common_error_text="expected to be at least one character long not containing leading or trailing spaces"
+
 # [internal function, do not change]
 __formatter_check_is_empty_or_with_invalid_characters() {
     declare input="$1"
@@ -40,18 +43,125 @@ __formatter_check_is_empty_or_with_invalid_characters() {
         # shellcheck disable=SC2155
         declare trimmed_input="$(echo -n "$input" | sed --regexp-extended 's/^\s+|\s+$//g')"
         [[ "$input" == "$trimmed_input" ]]
+        return $?
     }
+    return 1
 }
 
 # [internal function, do not change]
-__formatter_throw_if_is_empty() {
+__formatter_check_is_invalid_header() {
+    declare header="$1"
+
+    __formatter_check_is_empty_or_with_invalid_characters "$header" && {
+        # shellcheck disable=SC2155
+        declare trimmed_header="$(echo -n "$header" | sed --regexp-extended 's/^#+//')"
+        [[ "$header" == "$trimmed_header" ]]
+        return $?
+    }
+    return 1
+}
+
+# [internal function, do not change]
+__formatter_check_is_invalid_placeholder() {
+    declare placeholder="$1"
+
+    __formatter_check_is_empty_or_with_invalid_characters "$placeholder" && {
+        # shellcheck disable=SC2155
+        declare word_span="\/?[A-Za-z0-9]+"
+        declare word="$word_span([-/.]$word_span)*"
+        declare words="$word(\s$word)*"
+
+        # shellcheck disable=SC2155
+        declare trimmed_placeholder="$(echo -n "$placeholder" | sed --regexp-extended "s/^$words(\s\|\s$words)*$//")"
+        [[ "$trimmed_placeholder" == "" ]]
+        return $?
+    }
+    return 1
+}
+
+# [internal function, do not change]
+__formatter_check_is_invalid_option() {
+    declare option="$1"
+
+    __formatter_check_is_empty_or_with_invalid_characters "$option" && {
+        # shellcheck disable=SC2155
+        declare trimmed_option="$(echo -n "$option" | sed --regexp-extended 's/^\w+(-\w)*$//')"
+        [[ "$trimmed_option" == "" ]]
+        return $?
+    }
+    return 1
+}
+
+# [internal function, do not change]
+__formatter_throw_if() {
+    declare input="$1"
+    declare name="$2"
+    declare message="$3"
+    declare check="$4"
+
+    $check "$input" || {
+        printf "%s %s\n" "$name" "$message"
+        return 1
+    }
+    return 0
+}
+
+# [internal function, do not change]
+__formatter_throw_if_is_empty_or_with_invalid_characters() {
     declare input="$1"
     declare name="$2"
 
-    __formatter_check_is_empty_or_with_invalid_characters "$input" || {
-        printf "%s expected to be at least one character long not containing leading or trailing spaces\n" "$name"
+    __formatter_throw_if "$input" "$name" \
+        "$__formatter_common_error_text" \
+        __formatter_check_is_empty_or_with_invalid_characters
+}
+
+# [internal function, do not change]
+__formatter_throw_if_is_invalid_header() {
+    declare input="$1"
+    declare name="$2"
+
+    __formatter_throw_if "$input" "$name" \
+        "$__formatter_common_error_text and without any leading # sigils" \
+        __formatter_check_is_invalid_header
+}
+
+# [internal function, do not change]
+__formatter_throw_if_is_invalid_placeholder() {
+    declare placeholder="$1"
+    declare name="$2"
+
+    __formatter_throw_if "$placeholder" "$name" \
+        "$__formatter_common_error_text and containing a sequence of words (possibly slash-split) separated by spaces and ' | '" \
+        __formatter_check_is_invalid_placeholder
+}
+
+# [internal function, do not change]
+__formatter_throw_if_is_invalid_option() {
+    declare option="$1"
+    declare name="$2"
+
+    __formatter_throw_if "$option" "$name" \
+        "$__formatter_common_error_text and containing dash-separated words" \
+        __formatter_check_is_invalid_option
+}
+
+# [internal function, do not change]
+__formatter_throw_if_inside_list() {
+    [[ $__formatter_list_started == true ]] && {
+        printf 'list is already started'
         return 1
     }
+    return 0
+}
+
+# [internal function, do not change]
+__formatter_throw_if_outside_list() {
+    [[ $__formatter_list_started == false ]] && {
+        printf 'outside of the list'
+        return 1
+    }
+    return 0
 }
 
 # [internal function, do not change]
@@ -168,6 +278,8 @@ __render_list_indent() {
 
 # Initiate a new numbered list
 formatter_numbered_list_start() {
+    __formatter_throw_if_inside_list || return
+
     __formatter_list_started=true
     __formatter_list_style=numbered
 }
@@ -181,6 +293,8 @@ numbered_list:() {
 # Initiate a new bullet list
 # Mixing numbered and bullet lists currently is not possible
 formatter_bullet_list_start() {
+    __formatter_throw_if_inside_list || return
+
     __formatter_list_started=true
     __formatter_list_style=bullet
 }
@@ -195,6 +309,7 @@ bullet_list:() {
 # Mixing numbered and bullet lists currently is not possible
 # Can be used as a list terminator without explicit sublists endings
 formatter_list_end() {
+    __formatter_throw_if_outside_list || return
     __formatter_list_started=false
     __formatter_level_last_items=(1)
 }
@@ -209,6 +324,8 @@ list_end() {
 # End the current sublist or the entire list if the current one is the most outermost
 # Prefer ending the whole list via list_end rather than with this function
 formatter_sublist_end() {
+    __formatter_throw_if_outside_list || return
+
     if [[ $__formatter_current_indent_level == 1 ]]; then
         formatter_list_end
         return
@@ -269,7 +386,7 @@ formatter_render_text() {
     __formatter_render_indents_and_list_marks
     declare text="$1"
 
-    __formatter_throw_if_is_empty "$text" text
+    __formatter_throw_if_is_empty_or_with_invalid_characters "$text" text || return
     printf "%s\n" "$text"
 }
 
@@ -285,7 +402,7 @@ formatter_render_header() {
     __render_indent
     declare header="$1"
 
-    __formatter_throw_if_is_empty "$header" header
+    __formatter_throw_if_is_invalid_header "$header" header || return
     printf "$colors_HEADER$formatter_HEADER_MARK%s$colors_RESET\n" "$header"
 }
 
@@ -350,8 +467,8 @@ formatter_render_command_description() {
     declare command="$1"
     declare description="$2"
 
-    __formatter_throw_if_is_empty "$command" command
-    __formatter_throw_if_is_empty "$description" description
+    __formatter_throw_if_is_empty_or_with_invalid_characters "$command" command || return
+    __formatter_throw_if_is_empty_or_with_invalid_characters "$description" description || return
     printf "$colors_COMMAND%s$colors_RESET$formatter_DESCRIPTION_SEPARATOR_MARK%s\n" "$command" "$description"
 }
 
@@ -366,7 +483,7 @@ command:() {
 formatter_render_placeholder() {
     declare placeholder="$1"
 
-    __formatter_throw_if_is_empty "$placeholder" placeholder
+    __formatter_throw_if_is_invalid_placeholder "$placeholder" placeholder || return
     printf "$colors_SPECIAL_CHARACTER{{$colors_RESET$colors_PLACEHOLDER%s$colors_RESET$colors_SPECIAL_CHARACTER}}$colors_RESET" "$placeholder"
 }
 
@@ -385,6 +502,8 @@ any_file() {
 # Signature: file_with_extension {extension to render}
 file_with_extension() {
     declare extension="$1"
+
+    __formatter_throw_if_is_empty_or_with_invalid_characters "$extension" extension || return
     placeholder: "/path/to/file.$extension"
 }
 
@@ -416,7 +535,8 @@ formatter_render_placeholder_description() {
     declare placeholder="$1"
     declare description="$2"
 
-    __formatter_throw_if_is_empty "$description" description
+    __formatter_throw_if_is_invalid_placeholder "$placeholder" placeholder || return
+    __formatter_throw_if_is_empty_or_with_invalid_characters "$description" description || return
     placeholder: "$placeholder"
     printf "$formatter_DESCRIPTION_SEPARATOR_MARK%s\n" "$description"
 }
@@ -432,7 +552,7 @@ placeholder_description:() {
 formatter_render_option() {
     declare option="$1"
 
-    __formatter_throw_if_is_empty "$option" option
+    __formatter_throw_if_is_invalid_option "$option" option || return
     printf "${colors_OPTION}--%s${colors_RESET}" "$option"
 }
 
@@ -450,7 +570,8 @@ formatter_render_option_description() {
     declare option="$1"
     declare description="$2"
 
-    __formatter_throw_if_is_empty "$description" description
+    __formatter_throw_if_is_invalid_option "$option" option || return
+    __formatter_throw_if_is_empty_or_with_invalid_characters "$description" description || return
     option: "$option"
     printf "$formatter_DESCRIPTION_SEPARATOR_MARK%s\n" "$description"
 }
