@@ -1,0 +1,310 @@
+{
+    "title": "Scene",
+    "translation": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "world": {
+        "size": {
+            "value": {
+                "width": 1280.0,
+                "height": 720.0
+            },
+            "locked": false
+        },
+        "fov": {
+            "keyed": 60.0
+        }
+    },
+    "bg": {
+        "opacity": {
+            "keyed": 1.0
+        },
+        "paint": {
+            "keyed": {
+                "solid": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "gradient": {
+                    "type": "Linear",
+                    "stops": [
+                        {
+                            "color": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "position": 0.0
+                        },
+                        {
+                            "color": [
+                                1.0,
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "position": 1.0
+                        }
+                    ],
+                    "from": {
+                        "x": 0.0,
+                        "y": 0.5
+                    },
+                    "to": {
+                        "x": 1.0,
+                        "y": 0.5
+                    }
+                },
+                "type": "Gradient"
+            }
+        }
+    },
+    "layers": [
+        {
+            "obj": {
+                "shape": {
+                    "geometry": {
+                        "rect": {
+                            "bounds": {
+                                "size": {
+                                    "value": {
+                                        "keyed": {
+                                            "width": 271.0,
+                                            "height": 233.0
+                                        }
+                                    },
+                                    "locked": false
+                                },
+                                "pivotX": 0.5,
+                                "pivotY": 0.5
+                            },
+                            "corners": {
+                                "keyed": {
+                                    "value": 0.0
+                                }
+                            }
+                        }
+                    },
+                    "stroke": {
+                        "opacity": {
+                            "keyed": 1.0
+                        },
+                        "width": {
+                            "keyed": 0.0
+                        },
+                        "cap": {
+                            "keyed": "Butt"
+                        },
+                        "join": {
+                            "keyed": "Mitter"
+                        },
+                        "dash": {
+                            "keyed": 10.0
+                        },
+                        "gap": {
+                            "keyed": 0.0
+                        },
+                        "paint": {
+                            "keyed": {
+                                "solid": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "gradient": {
+                                    "type": "Linear",
+                                    "stops": [
+                                        {
+                                            "color": [
+                                                0.0,
+                                                0.0,
+                                                0.0,
+                                                1.0
+                                            ],
+                                            "position": 0.0
+                                        },
+                                        {
+                                            "color": [
+                                                0.0,
+                                                0.0,
+                                                0.0,
+                                                1.0
+                                            ],
+                                            "position": 1.0
+                                        }
+                                    ],
+                                    "from": {
+                                        "x": 0.0,
+                                        "y": 0.5
+                                    },
+                                    "to": {
+                                        "x": 1.0,
+                                        "y": 0.5
+                                    }
+                                },
+                                "type": "Solid"
+                            }
+                        }
+                    },
+                    "fill": {
+                        "opacity": {
+                            "keyed": 1.0
+                        },
+                        "paint": {
+                            "keyed": {
+                                "solid": [
+                                    0.53333336,
+                                    0.53333336,
+                                    0.53333336,
+                                    1.0
+                                ],
+                                "gradient": {
+                                    "type": "Linear",
+                                    "stops": [
+                                        {
+                                            "color": [
+                                                0.53333336,
+                                                0.53333336,
+                                                0.53333336,
+                                                1.0
+                                            ],
+                                            "position": 0.0
+                                        },
+                                        {
+                                            "color": [
+                                                0.53333336,
+                                                0.53333336,
+                                                0.53333336,
+                                                1.0
+                                            ],
+                                            "position": 1.0
+                                        }
+                                    ],
+                                    "from": {
+                                        "x": 0.0,
+                                        "y": 0.5
+                                    },
+                                    "to": {
+                                        "x": 1.0,
+                                        "y": 0.5
+                                    }
+                                },
+                                "type": "Solid"
+                            }
+                        }
+                    },
+                    "effects": []
+                }
+            },
+            "name": "Rectangle",
+            "id": 857421921086689009,
+            "visible": true,
+            "locked": false,
+            "masks": [],
+            "transform": {
+                "scale": {
+                    "value": {
+                        "keyed": {
+                            "x": 1.0,
+                            "y": 1.0
+                        }
+                    },
+                    "locked": true
+                },
+                "rot": {
+                    "keyed": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                },
+                "translation": {
+                    "keyed": {
+                        "x": 588.5,
+                        "y": 319.00006,
+                        "z": 0.0
+                    }
+                }
+            },
+            "paintEffects": [
+                {
+                    "value": {
+                        "gradient_wipe": {
+                            "type": {
+                                "keyed": "Linear"
+                            },
+                            "linearAngle": {
+                                "keyed": 0.0
+                            },
+                            "radialCenter": {
+                                "keyed": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "progress": {
+                                "keyed": 0.5
+                            },
+                            "feather": {
+                                "keyed": 0.0
+                            }
+                        }
+                    },
+                    "name": "Gradient Wipe",
+                    "enabled": true,
+                    "id": -739383762806158842
+                }
+            ],
+            "opacity": {
+                "keyed": 1.0
+            },
+            "blendMode": {
+                "keyed": "Normal"
+            },
+            "backgroundBlur": {
+                "value": {
+                    "size": {
+                        "keyed": 10.0
+                    },
+                    "opacity": {
+                        "keyed": 0.5
+                    },
+                    "brightness": {
+                        "keyed": 0.0
+                    }
+                },
+                "enabled": false
+            },
+            "layer3d": {
+                "value": {
+                    "material": {
+                        "metallic": {
+                            "keyed": 0.0
+                        },
+                        "roughness": {
+                            "keyed": 0.4
+                        }
+                    },
+                    "extrusion": {
+                        "keyed": 100.0
+                    }
+                },
+                "enabled": false
+            },
+            "selectedPath": null
+        }
+    ],
+    "animation": {
+        "length": 150,
+        "frame": 0
+    },
+    "id": -8341992414556435147,
+    "selectedLayers": [
+        857421921086689009
+    ]
+}

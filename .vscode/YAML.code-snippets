@@ -1,0 +1,59 @@
+{
+	"scene": {
+		"description": "Scene placeholder",
+		"scope": "yaml",
+		"include": [
+			"*.yaml"
+		],
+		"prefix": "sce",
+		"body": "{scene}"
+	},
+	"layer": {
+		"description": "Layer placeholder",
+		"scope": "yaml",
+		"include": [
+			"*.yaml"
+		],
+		"prefix": "lay",
+		"body": "{layer}"
+	},
+	"positive": {
+		"description": "Specify that a value lays down in a positive number range (zero included)",
+		"scope": "yaml",
+		"include": [
+			"*.yaml"
+		],
+		"prefix": "pos",
+		"body": [
+			"range:",
+			"\tfrom: 0",
+			"\tto: infinity"
+		]
+	},
+	"negative": {
+		"description": "Specify that a value lays down in a negative number range (zero included)",
+		"scope": "yaml",
+		"include": [
+			"*.yaml"
+		],
+		"prefix": "neg",
+		"body": [
+			"range:",
+			"\tfrom: -infinity",
+			"\tto: 0"
+		]
+	},
+	"percentage": {
+		"description": "Specify that a value lays down in 0..100 range",
+		"scope": "yaml",
+		"include": [
+			"*.yaml"
+		],
+		"prefix": "per",
+		"body": [
+			"range:",
+			"\tfrom: 0",
+			"\tto: 100"
+		]
+	}
+}

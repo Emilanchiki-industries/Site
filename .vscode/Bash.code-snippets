@@ -1,0 +1,122 @@
+{
+	"trim all": {
+		"description": "Trim string from both sides containing leading and trailing characters",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "tal",
+		"body": "sed --regexp-extended 's/^${1:pattern}|$1$//g'"
+	},
+	"trim left": {
+		"description": "Trim string from left side containing leading characters",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "tle",
+		"body": "sed --regexp-extended 's/^${1:pattern}//g'"
+	},
+	"trim right": {
+		"description": "Trim string from right side containing leading characters",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "tri",
+		"body": "sed --regexp-extended 's/${1:pattern}$//g'"
+	},
+	"text": {
+		"description": "Text",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "tex",
+		"body": "text: '${1:text}'"
+	},
+	"header": {
+		"description": "Section header",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "hea",
+		"body": "header: '${1:text}'"
+	},
+	"command": {
+		"description": "Command",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "com",
+		"body": "command: ${1:command} '${2:description}'"
+	},
+	"placeholder": {
+		"description": "Placeholder",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "pla",
+		"body": "placeholder: ${1:placeholder} '${2:description}'"
+	},
+	"command description": {
+		"description": "Command description",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "cde",
+		"body": "command_description: ${1:command} '${2:description}'"
+	},
+	"placeholder description": {
+		"description": "Placeholder description",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "pde",
+		"body": "placeholder_description: ${1:placeholder} '${2:description}'"
+	},
+	"numbered list": {
+		"description": "Numbered list",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "nli",
+		"body": [
+			"numbered_list:",
+			"\t$0",
+			"list_end"
+		]
+	},
+	"bullet list": {
+		"description": "Bullet list",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "bli",
+		"body": [
+			"bullet_list:",
+			"\t$0",
+			"list_end"
+		]
+	},
+	"sublist": {
+		"description": "Sublist",
+		"scope": "shellscript",
+		"include": [
+			"*.sh"
+		],
+		"prefix": "sli",
+		"body": [
+			"sublist:",
+			"\t$0",
+			"sublist_end"
+		]
+	},
+}

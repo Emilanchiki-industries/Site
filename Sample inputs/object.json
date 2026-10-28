@@ -1,0 +1,150 @@
+{
+    "obj": {
+        "scene": {
+            "source": 7758480884903595071,
+            "bounds": {
+                "size": {
+                    "value": {
+                        "keyed": {
+                            "width": 428.83752,
+                            "height": 222.17361
+                        }
+                    },
+                    "locked": false
+                },
+                "pivotX": 0.5,
+                "pivotY": 0.5
+            },
+            "stroke": {
+                "opacity": {
+                    "keyed": 1.0
+                },
+                "width": {
+                    "keyed": 0.0
+                },
+                "cap": {
+                    "keyed": "Butt"
+                },
+                "join": {
+                    "keyed": "Mitter"
+                },
+                "dash": {
+                    "keyed": 10.0
+                },
+                "gap": {
+                    "keyed": 0.0
+                },
+                "paint": {
+                    "keyed": {
+                        "solid": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "gradient": {
+                            "type": "Linear",
+                            "stops": [
+                                {
+                                    "color": [
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                        1.0
+                                    ],
+                                    "position": 0.0
+                                },
+                                {
+                                    "color": [
+                                        0.0,
+                                        0.0,
+                                        0.0,
+                                        1.0
+                                    ],
+                                    "position": 1.0
+                                }
+                            ],
+                            "from": {
+                                "x": 0.0,
+                                "y": 0.5
+                            },
+                            "to": {
+                                "x": 1.0,
+                                "y": 0.5
+                            }
+                        },
+                        "type": "Solid"
+                    }
+                }
+            }
+        }
+    },
+    "name": "Scene Component",
+    "id": -4112933104069360277,
+    "visible": true,
+    "locked": false,
+    "masks": [],
+    "transform": {
+        "scale": {
+            "value": {
+                "keyed": {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            },
+            "locked": true
+        },
+        "rot": {
+            "keyed": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -28.0
+            }
+        },
+        "translation": {
+            "keyed": {
+                "x": 1153.0,
+                "y": 619.0,
+                "z": 0.0
+            }
+        }
+    },
+    "paintEffects": [],
+    "opacity": {
+        "keyed": 1.0
+    },
+    "blendMode": {
+        "keyed": "Normal"
+    },
+    "backgroundBlur": {
+        "value": {
+            "size": {
+                "keyed": 10.0
+            },
+            "opacity": {
+                "keyed": 0.5
+            },
+            "brightness": {
+                "keyed": 0.0
+            }
+        },
+        "enabled": false
+    },
+    "layer3d": {
+        "value": {
+            "material": {
+                "metallic": {
+                    "keyed": 0.0
+                },
+                "roughness": {
+                    "keyed": 0.4
+                }
+            },
+            "extrusion": {
+                "keyed": 100.0
+            }
+        },
+        "enabled": false
+    },
+    "selectedPath": null
+}

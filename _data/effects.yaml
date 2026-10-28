@@ -1,0 +1,183 @@
+- id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.gaussian_blur
+  name: Blur
+  category: other
+  type: layer
+  properties:
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.gaussian_blur.value.keyed.width
+      name: Width
+      description: Specifies a horizontal blur amount
+      type: number
+      json-type: number
+      units: pixels
+      default: 5
+      range:
+        from: 0
+        to: infinity
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.gaussian_blur.value.keyed.height
+      name: Height
+      description: Specifies a vertical blur amount
+      type: number
+      json-type: number
+      units: pixels
+      default: 5
+      range:
+        from: 0
+        to: infinity
+
+- id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_shadow
+  name: Drop Shadow
+  category: decorating
+  type: layer
+  properties:
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_shadow.type.keyed
+      name: Type
+      description: Determines whether shadow is put behind the object outside of it, or inside it
+      type: enumeration
+      units: unavailable
+      json-type: string
+      default: Outer
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_shadow.color.keyed
+      name: Color
+      description: Specifies color used for a shadow
+      type: color
+      units: unavailable
+      json-type: array
+      default: black
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_shadow.opacity.keyed
+      name: Opacity
+      description: Specifies an opacity of a shadow
+      type: number
+      units: percents
+      json-type: number
+      default: 100
+      range:
+        from: 0
+        to: 100
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_shadow.angle.keyed
+      name: Angle
+      description: |
+        Specifies an angle which shadow is displaced at regarding the object
+        0 angle points in -X direction
+        90 angle points in -Y direction
+        180 angle points in X direction
+        270 angle points in Y direction
+      type: number
+      units: degrees
+      json-type: number
+      default: 0
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_shadow.size.keyed
+      name: Size
+      description: Specifies a blur size of a shadow
+      type: number
+      units: pixels
+      json-type: number
+      default: 10
+      range:
+        from: 0
+        to: infinity
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_shadow.size.keyed
+      name: Distance
+      description: Specifies a distance shadow is shifted regarding the object in the direction pointed by Angle
+      type: number
+      units: pixels
+      json-type: number
+      default: 0
+
+- id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_glow
+  name: Glow
+  category: decorating
+  type: layer
+  properties:
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_glow.outer.keyed
+      name: Outer Glow
+      description: Determines whether glow is applied outside of the object
+      type: switch
+      units: unavailable
+      json-type: boolean
+      default: true
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_glow.inner.keyed
+      name: Inner Glow
+      description: Determines whether glow is applied inside of the object from its edges
+      type: switch
+      units: unavailable
+      json-type: boolean
+      default: false
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_glow.inner.color
+      name: Color
+      description: Specifies a glow color
+      type: color
+      units: unavailable
+      json-type: array
+      default: "#1874C4"
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_glow.opacity.keyed
+      name: Opacity
+      description: Specifies an opacity of a glow
+      type: number
+      units: percents
+      json-type: number
+      default: 100
+      range:
+        from: 0
+        to: 100
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_glow.size.keyed
+      name: Size
+      description: Specifies a size of a glow
+      type: number
+      units: pixels
+      json-type: number
+      default: 10
+      range:
+        from: 0
+        to: infinity
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.layer_glow.choke.keyed
+      name: Hardness
+      description: Specifies how rough glow edge
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      range:
+        from: 0
+        to: 100
+
+- id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.glare
+  name: Glare
+  category: decorating
+  type: layer
+  properties:
+    - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.glare.size.keyed
+    - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.glare.angle.keyed
+    - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.glare.threshold.keyed
+    - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.glare.strength.keyed
+    - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.glare.color.value.keyed
+    - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.glare.color.enabled.keyed
+
+- id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.overlay_fill
+  name: Overlay fill
+  category: decorating
+  type: layer
+  properties:
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.overlay_fill.fill.keyed
+      name: Paint
+      description: Specifies a new or additional color of the object
+      type: color
+      units: unavailable
+      json-type: object
+      default: "#F44336"
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.overlay_fill.opacity.keyed
+      name: Opacity
+      description: Specifies an opacity of a overlay fill
+      type: number
+      units: percents
+      json-type: number
+      default: 100
+      range:
+        from: 0
+        to: 100
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.overlay_fill.replace.keyed
+      name: Opacity
+      description: Determines whether to replace an existing object color
+      type: switch
+      units: unavailable
+      json-type: boolean
+      default: false

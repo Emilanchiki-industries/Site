@@ -1,0 +1,3 @@
+external-sources=true
+disable=SC2004
+enable=SC2250

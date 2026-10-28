@@ -1,0 +1,455 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$defs": {
+        "id": {
+            "title": "id",
+            "type": "string",
+            "minLength": 1,
+            "not": {
+                "pattern": "^\\.|\\.\\s*\\.|\\.$|{\\s*}|{\\s+\\S+\\s*}|{\\s*\\S+\\s+}"
+            },
+            "examples": [
+                "projectEdit.project.scenes.{scene}",
+                "projectEdit.project.scenes.{scene}.layers.{layer}",
+                "projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value"
+            ]
+        },
+        "name": {
+            "title": "name",
+            "type": "string",
+            "minLength": 1,
+            "not": {
+                "pattern": "^\\s+|^(\\s+)$|\\s+$"
+            }
+        },
+        "description": {
+            "examples": [
+                "Specifies",
+                "Determines"
+            ],
+            "type": "string",
+            "minLength": 1,
+            "not": {
+                "pattern": "^\\s+|^(\\s+)$"
+            }
+        }
+    },
+    "title": "effects",
+    "description": "A documentation of all effects in VectorMotion",
+    "type": "array",
+    "minItems": 1,
+    "uniqueItems": true,
+    "items": {
+        "title": "effect",
+        "description": "An effect documentation",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+            "id",
+            "name",
+            "type",
+            "category",
+            "properties"
+        ],
+        "properties": {
+            "id": {
+                "description": "A full path to the effect in JSON format where unknown values are represented as descriptive placeholders like {object}",
+                "$ref": "#/$defs/id"
+            },
+            "name": {
+                "description": "An effect name displayed in UI when choosing it like Blur",
+                "$ref": "#/$defs/name"
+            },
+            "type": {
+                "title": "type",
+                "description": "An effect type displayed as two tabs Layer and Geometry in UI",
+                "type": "string",
+                "oneOf": [
+                    {
+                        "description": "An effect affecting visual representation of an object",
+                        "const": "layer"
+                    },
+                    {
+                        "description": "An effect affecting geometry of an object",
+                        "const": "geometry"
+                    }
+                ]
+            },
+            "category": {
+                "title": "type",
+                "description": "An effect category assigned to it for the sake of grouping different similar effects",
+                "type": "string",
+                "oneOf": [
+                    {
+                        "description": "An effect producing several instances of an object like Repeat",
+                        "const": "copying"
+                    },
+                    {
+                        "description": "An effect like Tint modifying an overall object look by adjusting its colors",
+                        "const": "coloring"
+                    },
+                    {
+                        "description": "An effect deforming an object like Perspective Deform",
+                        "const": "deforming"
+                    },
+                    {
+                        "description": "An effect adding extra object decorations like Drop Shadow",
+                        "const": "decorating"
+                    },
+                    {
+                        "description": "An effect adding hiding object part",
+                        "const": "masking"
+                    },
+                    {
+                        "description": "An effect which isn't related to any other category",
+                        "const": "other"
+                    }
+                ]
+            },
+            "properties": {
+                "title": "properties",
+                "description": "Filter properties like Opacity",
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                    "title": "property",
+                    "description": "A filter property like Opacity",
+                    "oneOf": [
+                        {
+                            "description": "A filter property with unclear behaviour and purpose, should be used when its unclear what this property does",
+                            "$ref": "#/$defs/id"
+                        },
+                        {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                                "id",
+                                "name",
+                                "description",
+                                "type",
+                                "units",
+                                "json-type",
+                                "default"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "description": "A full path to the property in JSON format where unknown values are represented as descriptive placeholders like {object}",
+                                    "$ref": "#/$defs/id"
+                                },
+                                "name": {
+                                    "description": "A property name displayed in UI when choosing it like Blur",
+                                    "$ref": "#/$defs/name"
+                                },
+                                "description": {
+                                    "description": "A property description",
+                                    "$ref": "#/$defs/description"
+                                },
+                                "type": {
+                                    "title": "type",
+                                    "description": "A human readable property type it belongs to like integer, and how it's represented in UI",
+                                    "type": "string",
+                                    "oneOf": [
+                                        {
+                                            "description": "A property type permitting any integer in a specified range (or arbitraty)",
+                                            "const": "integer"
+                                        },
+                                        {
+                                            "description": "A property type permitting any number in a specified range (or arbitraty), i.e. float and integer",
+                                            "const": "number"
+                                        },
+                                        {
+                                            "description": "A property type permitting any text value",
+                                            "const": "text"
+                                        },
+                                        {
+                                            "description": "A property type permitting any predetermined value from list",
+                                            "const": "enumeration"
+                                        },
+                                        {
+                                            "description": "A property type permitting any color or gradient",
+                                            "const": "color"
+                                        },
+                                        {
+                                            "description": "A property type permitting to turn on / off the effect feature",
+                                            "const": "switch"
+                                        }
+                                    ]
+                                },
+                                "units": {
+                                    "title": "units",
+                                    "description": "A measurement units of the property percents",
+                                    "type": "string",
+                                    "enum": [
+                                        "percents",
+                                        "pixels",
+                                        "degrees",
+                                        "unavailable"
+                                    ]
+                                },
+                                "json-type": {
+                                    "title": "type",
+                                    "description": "A JSON property type it belongs to like integer",
+                                    "type": "string",
+                                    "enum": [
+                                        "boolean",
+                                        "integer",
+                                        "number",
+                                        "string",
+                                        "array",
+                                        "object"
+                                    ]
+                                },
+                                "default": {
+                                    "title": "default",
+                                    "description": "A default property value which is displayed in UI like 5"
+                                },
+                                "range": {
+                                    "title": "range",
+                                    "description": "A property value range like 0%..100%",
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": [
+                                        "from",
+                                        "to"
+                                    ],
+                                    "properties": {
+                                        "from": {
+                                            "title": "from",
+                                            "description": "A starting range value like 0%",
+                                            "oneOf": [
+                                                {
+                                                    "type": "number"
+                                                },
+                                                {
+                                                    "type": "string",
+                                                    "const": "-infinity"
+                                                }
+                                            ]
+                                        },
+                                        "to": {
+                                            "title": "from",
+                                            "description": "An ending range value like 100%",
+                                            "oneOf": [
+                                                {
+                                                    "type": "number"
+                                                },
+                                                {
+                                                    "type": "string",
+                                                    "const": "infinity"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "not": {
+                                        "properties": {
+                                            "from": {
+                                                "const": "-infinity"
+                                            },
+                                            "to": {
+                                                "const": "infinity"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "not": {
+                                "anyOf": [
+                                    {
+                                        "$comment": "if type == integer or type == number then json-type == integer or json-type == number",
+                                        "properties": {
+                                            "type": {
+                                                "enum": [
+                                                    "integer",
+                                                    "number"
+                                                ]
+                                            },
+                                            "json-type": {
+                                                "not": {
+                                                    "enum": [
+                                                        "integer",
+                                                        "number"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == text then json-type == string",
+                                        "properties": {
+                                            "type": {
+                                                "const": "text"
+                                            },
+                                            "json-type": {
+                                                "not": {
+                                                    "const": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == text then units == unavailable",
+                                        "properties": {
+                                            "type": {
+                                                "const": "text"
+                                            },
+                                            "units": {
+                                                "not": {
+                                                    "const": "unavailable"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == enumeration then json-type == string",
+                                        "properties": {
+                                            "type": {
+                                                "const": "enumeration"
+                                            },
+                                            "json-type": {
+                                                "not": {
+                                                    "const": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == enumeration then units == unavailable",
+                                        "properties": {
+                                            "type": {
+                                                "const": "enumeration"
+                                            },
+                                            "units": {
+                                                "not": {
+                                                    "const": "unavailable"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == color then json-type == array or json-type == object",
+                                        "properties": {
+                                            "type": {
+                                                "const": "color"
+                                            },
+                                            "json-type": {
+                                                "not": {
+                                                    "enum": [
+                                                        "array",
+                                                        "object"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == color then units == unavailable",
+                                        "properties": {
+                                            "type": {
+                                                "const": "color"
+                                            },
+                                            "units": {
+                                                "not": {
+                                                    "const": "unavailable"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == switch then json-type == boolean",
+                                        "properties": {
+                                            "type": {
+                                                "const": "switch"
+                                            },
+                                            "json-type": {
+                                                "not": {
+                                                    "const": "boolean"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == switch then units == unavailable",
+                                        "properties": {
+                                            "type": {
+                                                "const": "switch"
+                                            },
+                                            "units": {
+                                                "not": {
+                                                    "const": "unavailable"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if units == percents then default == 0..100",
+                                        "properties": {
+                                            "units": {
+                                                "const": "percents"
+                                            },
+                                            "default": {
+                                                "not": {
+                                                    "minimum": 0,
+                                                    "maximum": 100
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if units == percents then from == 0..100",
+                                        "properties": {
+                                            "units": {
+                                                "const": "percents"
+                                            },
+                                            "range": {
+                                                "properties": {
+                                                    "from": {
+                                                        "not": {
+                                                            "minimum": 0,
+                                                            "maximum": 100
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if units == percents then to == 0..100",
+                                        "properties": {
+                                            "units": {
+                                                "const": "percents"
+                                            },
+                                            "range": {
+                                                "properties": {
+                                                    "to": {
+                                                        "not": {
+                                                            "minimum": 0,
+                                                            "maximum": 100
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == switch then default == boolean",
+                                        "properties": {
+                                            "type": {
+                                                "const": "switch"
+                                            },
+                                            "default": {
+                                                "not": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1473 @@
+{
+	"resources": {
+		"points": [],
+		"files": [
+			"files/0",
+			{
+				"pack-res": 1
+			}
+		]
+	},
+	"projectEdit": {
+		"project": {
+			"scenes": [
+				{
+					"title": "Scene",
+					"translation": {
+						"x": 0.0,
+						"y": 0.0
+					},
+					"world": {
+						"size": {
+							"value": {
+								"width": 1655.4767,
+								"height": 857.67505
+							},
+							"locked": false
+						},
+						"fov": {
+							"keyed": 60.0
+						}
+					},
+					"bg": {
+						"opacity": {
+							"keyed": 1.0
+						},
+						"paint": {
+							"keyed": {
+								"solid": [
+									1.0,
+									1.0,
+									1.0,
+									1.0
+								],
+								"gradient": {
+									"type": "Linear",
+									"stops": [
+										{
+											"color": [
+												1.0,
+												1.0,
+												1.0,
+												1.0
+											],
+											"position": 0.0
+										},
+										{
+											"color": [
+												1.0,
+												1.0,
+												1.0,
+												1.0
+											],
+											"position": 1.0
+										}
+									],
+									"from": {
+										"x": 0.0,
+										"y": 0.5
+									},
+									"to": {
+										"x": 1.0,
+										"y": 0.5
+									}
+								},
+								"type": "Solid"
+							}
+						}
+					},
+					"layers": [
+						{
+							"obj": {
+								"image": {
+									"res": {
+										"name": "14249",
+										"desc": {
+											"file": {
+												"res": "files/0",
+												"rawSize": {
+													"width": 1080,
+													"height": 2400
+												}
+											},
+											"region": {
+												"x": 0.0,
+												"y": 0.0,
+												"width": 1080.0,
+												"height": 2400.0
+											},
+											"rot": 0,
+											"flipY": false,
+											"flipX": false
+										},
+										"id": -9047448049156210169
+									},
+									"bounds": {
+										"size": {
+											"value": {
+												"keyed": {
+													"width": 330.0,
+													"height": 236.0
+												}
+											},
+											"locked": false
+										},
+										"pivotX": 0.5,
+										"pivotY": 0.5
+									},
+									"stroke": {
+										"opacity": {
+											"keyed": 1.0
+										},
+										"width": {
+											"keyed": 0.0
+										},
+										"cap": {
+											"keyed": "Butt"
+										},
+										"join": {
+											"keyed": "Mitter"
+										},
+										"dash": {
+											"keyed": 10.0
+										},
+										"gap": {
+											"keyed": 0.0
+										},
+										"paint": {
+											"keyed": {
+												"solid": [
+													0.0,
+													0.0,
+													0.0,
+													1.0
+												],
+												"gradient": {
+													"type": "Linear",
+													"stops": [
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 0.0
+														},
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 1.0
+														}
+													],
+													"from": {
+														"x": 0.0,
+														"y": 0.5
+													},
+													"to": {
+														"x": 1.0,
+														"y": 0.5
+													}
+												},
+												"type": "Solid"
+											}
+										}
+									},
+									"alpha": null
+								}
+							},
+							"name": "Image",
+							"id": 3112969909521696333,
+							"visible": true,
+							"locked": false,
+							"masks": [],
+							"transform": {
+								"scale": {
+									"value": {
+										"keyed": {
+											"x": 1.0,
+											"y": 1.0
+										}
+									},
+									"locked": true
+								},
+								"rot": {
+									"keyed": {
+										"x": 0.0,
+										"y": 0.0,
+										"z": 57.0
+									}
+								},
+								"translation": {
+									"keyed": {
+										"x": 195.0,
+										"y": 194.0,
+										"z": 0.0
+									}
+								}
+							},
+							"paintEffects": [],
+							"opacity": {
+								"keyed": 1.0
+							},
+							"blendMode": {
+								"keyed": "Normal"
+							},
+							"backgroundBlur": {
+								"value": {
+									"size": {
+										"keyed": 10.0
+									},
+									"opacity": {
+										"keyed": 0.5
+									},
+									"brightness": {
+										"keyed": 0.0
+									}
+								},
+								"enabled": false
+							},
+							"layer3d": {
+								"value": {
+									"material": {
+										"metallic": {
+											"keyed": 0.0
+										},
+										"roughness": {
+											"keyed": 0.4
+										}
+									},
+									"extrusion": {
+										"keyed": 100.0
+									}
+								},
+								"enabled": false
+							},
+							"selectedPath": null
+						},
+						{
+							"obj": {
+								"shape": {
+									"geometry": {
+										"rect": {
+											"bounds": {
+												"size": {
+													"value": {
+														"keyed": {
+															"width": 187.0,
+															"height": 152.0
+														}
+													},
+													"locked": false
+												},
+												"pivotX": 0.5,
+												"pivotY": 0.5
+											},
+											"corners": {
+												"keyed": {
+													"value": 0.0
+												}
+											}
+										}
+									},
+									"stroke": {
+										"opacity": {
+											"keyed": 1.0
+										},
+										"width": {
+											"keyed": 0.0
+										},
+										"cap": {
+											"keyed": "Butt"
+										},
+										"join": {
+											"keyed": "Mitter"
+										},
+										"dash": {
+											"keyed": 10.0
+										},
+										"gap": {
+											"keyed": 0.0
+										},
+										"paint": {
+											"keyed": {
+												"solid": [
+													0.0,
+													0.0,
+													0.0,
+													1.0
+												],
+												"gradient": {
+													"type": "Linear",
+													"stops": [
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 0.0
+														},
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 1.0
+														}
+													],
+													"from": {
+														"x": 0.0,
+														"y": 0.5
+													},
+													"to": {
+														"x": 1.0,
+														"y": 0.5
+													}
+												},
+												"type": "Solid"
+											}
+										}
+									},
+									"fill": {
+										"opacity": {
+											"keyed": 1.0
+										},
+										"paint": {
+											"keyed": {
+												"solid": [
+													0.53333336,
+													0.53333336,
+													0.53333336,
+													1.0
+												],
+												"gradient": {
+													"type": "Linear",
+													"stops": [
+														{
+															"color": [
+																0.53333336,
+																0.53333336,
+																0.53333336,
+																1.0
+															],
+															"position": 0.0
+														},
+														{
+															"color": [
+																0.53333336,
+																0.53333336,
+																0.53333336,
+																1.0
+															],
+															"position": 1.0
+														}
+													],
+													"from": {
+														"x": 0.0,
+														"y": 0.5
+													},
+													"to": {
+														"x": 1.0,
+														"y": 0.5
+													}
+												},
+												"type": "Solid"
+											}
+										}
+									},
+									"effects": []
+								}
+							},
+							"name": "Rectangle",
+							"id": 3589614063542879795,
+							"visible": true,
+							"locked": false,
+							"masks": [],
+							"transform": {
+								"scale": {
+									"value": {
+										"keyed": {
+											"x": 1.0,
+											"y": 1.0
+										}
+									},
+									"locked": true
+								},
+								"rot": {
+									"keyed": {
+										"x": 0.0,
+										"y": 0.0,
+										"z": 0.0
+									}
+								},
+								"translation": {
+									"keyed": {
+										"x": 524.0,
+										"y": 191.0,
+										"z": 0.0
+									}
+								}
+							},
+							"paintEffects": [],
+							"opacity": {
+								"keyed": 1.0
+							},
+							"blendMode": {
+								"keyed": "Normal"
+							},
+							"backgroundBlur": {
+								"value": {
+									"size": {
+										"keyed": 10.0
+									},
+									"opacity": {
+										"keyed": 0.5
+									},
+									"brightness": {
+										"keyed": 0.0
+									}
+								},
+								"enabled": false
+							},
+							"layer3d": {
+								"value": {
+									"material": {
+										"metallic": {
+											"keyed": 0.0
+										},
+										"roughness": {
+											"keyed": 0.4
+										}
+									},
+									"extrusion": {
+										"keyed": 100.0
+									}
+								},
+								"enabled": false
+							},
+							"selectedPath": null
+						},
+						{
+							"obj": {
+								"shape": {
+									"geometry": {
+										"polygon": {
+											"bounds": {
+												"size": {
+													"value": {
+														"keyed": {
+															"width": 432.0,
+															"height": 144.0
+														}
+													},
+													"locked": false
+												},
+												"pivotX": 0.5,
+												"pivotY": 0.5
+											},
+											"sides": {
+												"keyed": 5
+											},
+											"starFactor": {
+												"keyed": 0.5278641
+											}
+										}
+									},
+									"stroke": {
+										"opacity": {
+											"keyed": 1.0
+										},
+										"width": {
+											"keyed": 0.0
+										},
+										"cap": {
+											"keyed": "Butt"
+										},
+										"join": {
+											"keyed": "Mitter"
+										},
+										"dash": {
+											"keyed": 10.0
+										},
+										"gap": {
+											"keyed": 0.0
+										},
+										"paint": {
+											"keyed": {
+												"solid": [
+													0.0,
+													0.0,
+													0.0,
+													1.0
+												],
+												"gradient": {
+													"type": "Linear",
+													"stops": [
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 0.0
+														},
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 1.0
+														}
+													],
+													"from": {
+														"x": 0.0,
+														"y": 0.5
+													},
+													"to": {
+														"x": 1.0,
+														"y": 0.5
+													}
+												},
+												"type": "Solid"
+											}
+										}
+									},
+									"fill": {
+										"opacity": {
+											"keyed": 1.0
+										},
+										"paint": {
+											"keyed": {
+												"solid": [
+													0.53333336,
+													0.53333336,
+													0.53333336,
+													1.0
+												],
+												"gradient": {
+													"type": "Linear",
+													"stops": [
+														{
+															"color": [
+																0.53333336,
+																0.53333336,
+																0.53333336,
+																1.0
+															],
+															"position": 0.0
+														},
+														{
+															"color": [
+																0.53333336,
+																0.53333336,
+																0.53333336,
+																1.0
+															],
+															"position": 1.0
+														}
+													],
+													"from": {
+														"x": 0.0,
+														"y": 0.5
+													},
+													"to": {
+														"x": 1.0,
+														"y": 0.5
+													}
+												},
+												"type": "Solid"
+											}
+										}
+									},
+									"effects": []
+								}
+							},
+							"name": "Star",
+							"id": 6546558526001464646,
+							"visible": true,
+							"locked": false,
+							"masks": [],
+							"transform": {
+								"scale": {
+									"value": {
+										"keyed": {
+											"x": 1.0,
+											"y": 1.0
+										}
+									},
+									"locked": true
+								},
+								"rot": {
+									"keyed": {
+										"x": 0.0,
+										"y": 0.0,
+										"z": 0.0
+									}
+								},
+								"translation": {
+									"keyed": {
+										"x": 867.0,
+										"y": 181.0,
+										"z": 0.0
+									}
+								}
+							},
+							"paintEffects": [],
+							"opacity": {
+								"keyed": 1.0
+							},
+							"blendMode": {
+								"keyed": "Normal"
+							},
+							"backgroundBlur": {
+								"value": {
+									"size": {
+										"keyed": 10.0
+									},
+									"opacity": {
+										"keyed": 0.5
+									},
+									"brightness": {
+										"keyed": 0.0
+									}
+								},
+								"enabled": false
+							},
+							"layer3d": {
+								"value": {
+									"material": {
+										"metallic": {
+											"keyed": 0.0
+										},
+										"roughness": {
+											"keyed": 0.4
+										}
+									},
+									"extrusion": {
+										"keyed": 100.0
+									}
+								},
+								"enabled": false
+							},
+							"selectedPath": null
+						},
+						{
+							"obj": {
+								"shape": {
+									"geometry": {
+										"oval": {
+											"size": {
+												"value": {
+													"keyed": {
+														"width": 457.0,
+														"height": 216.0
+													}
+												},
+												"locked": false
+											},
+											"pivotX": 0.5,
+											"pivotY": 0.5
+										}
+									},
+									"stroke": {
+										"opacity": {
+											"keyed": 1.0
+										},
+										"width": {
+											"keyed": 0.0
+										},
+										"cap": {
+											"keyed": "Butt"
+										},
+										"join": {
+											"keyed": "Mitter"
+										},
+										"dash": {
+											"keyed": 10.0
+										},
+										"gap": {
+											"keyed": 0.0
+										},
+										"paint": {
+											"keyed": {
+												"solid": [
+													0.0,
+													0.0,
+													0.0,
+													1.0
+												],
+												"gradient": {
+													"type": "Linear",
+													"stops": [
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 0.0
+														},
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 1.0
+														}
+													],
+													"from": {
+														"x": 0.0,
+														"y": 0.5
+													},
+													"to": {
+														"x": 1.0,
+														"y": 0.5
+													}
+												},
+												"type": "Solid"
+											}
+										}
+									},
+									"fill": {
+										"opacity": {
+											"keyed": 1.0
+										},
+										"paint": {
+											"keyed": {
+												"solid": [
+													0.53333336,
+													0.53333336,
+													0.53333336,
+													1.0
+												],
+												"gradient": {
+													"type": "Linear",
+													"stops": [
+														{
+															"color": [
+																0.53333336,
+																0.53333336,
+																0.53333336,
+																1.0
+															],
+															"position": 0.0
+														},
+														{
+															"color": [
+																0.53333336,
+																0.53333336,
+																0.53333336,
+																1.0
+															],
+															"position": 1.0
+														}
+													],
+													"from": {
+														"x": 0.0,
+														"y": 0.5
+													},
+													"to": {
+														"x": 1.0,
+														"y": 0.5
+													}
+												},
+												"type": "Solid"
+											}
+										}
+									},
+									"effects": []
+								}
+							},
+							"name": "Circle",
+							"id": -8830106206748979308,
+							"visible": true,
+							"locked": false,
+							"masks": [],
+							"transform": {
+								"scale": {
+									"value": {
+										"keyed": {
+											"x": 1.0,
+											"y": 1.0
+										}
+									},
+									"locked": true
+								},
+								"rot": {
+									"keyed": {
+										"x": 0.0,
+										"y": 0.0,
+										"z": 0.0
+									}
+								},
+								"translation": {
+									"keyed": {
+										"x": 1377.0,
+										"y": 151.0,
+										"z": 0.0
+									}
+								}
+							},
+							"paintEffects": [],
+							"opacity": {
+								"keyed": 1.0
+							},
+							"blendMode": {
+								"keyed": "Normal"
+							},
+							"backgroundBlur": {
+								"value": {
+									"size": {
+										"keyed": 10.0
+									},
+									"opacity": {
+										"keyed": 0.5
+									},
+									"brightness": {
+										"keyed": 0.0
+									}
+								},
+								"enabled": false
+							},
+							"layer3d": {
+								"value": {
+									"material": {
+										"metallic": {
+											"keyed": 0.0
+										},
+										"roughness": {
+											"keyed": 0.4
+										}
+									},
+									"extrusion": {
+										"keyed": 100.0
+									}
+								},
+								"enabled": false
+							},
+							"selectedPath": null
+						},
+						{
+							"obj": {
+								"shape": {
+									"geometry": {
+										"polygon": {
+											"bounds": {
+												"size": {
+													"value": {
+														"keyed": {
+															"width": 225.0,
+															"height": 179.0
+														}
+													},
+													"locked": false
+												},
+												"pivotX": 0.5,
+												"pivotY": 0.5
+											},
+											"sides": {
+												"keyed": 3
+											},
+											"starFactor": {
+												"keyed": 0.0
+											}
+										}
+									},
+									"stroke": {
+										"opacity": {
+											"keyed": 1.0
+										},
+										"width": {
+											"keyed": 0.0
+										},
+										"cap": {
+											"keyed": "Butt"
+										},
+										"join": {
+											"keyed": "Mitter"
+										},
+										"dash": {
+											"keyed": 10.0
+										},
+										"gap": {
+											"keyed": 0.0
+										},
+										"paint": {
+											"keyed": {
+												"solid": [
+													0.0,
+													0.0,
+													0.0,
+													1.0
+												],
+												"gradient": {
+													"type": "Linear",
+													"stops": [
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 0.0
+														},
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 1.0
+														}
+													],
+													"from": {
+														"x": 0.0,
+														"y": 0.5
+													},
+													"to": {
+														"x": 1.0,
+														"y": 0.5
+													}
+												},
+												"type": "Solid"
+											}
+										}
+									},
+									"fill": {
+										"opacity": {
+											"keyed": 1.0
+										},
+										"paint": {
+											"keyed": {
+												"solid": [
+													0.53333336,
+													0.53333336,
+													0.53333336,
+													1.0
+												],
+												"gradient": {
+													"type": "Linear",
+													"stops": [
+														{
+															"color": [
+																0.53333336,
+																0.53333336,
+																0.53333336,
+																1.0
+															],
+															"position": 0.0
+														},
+														{
+															"color": [
+																0.53333336,
+																0.53333336,
+																0.53333336,
+																1.0
+															],
+															"position": 1.0
+														}
+													],
+													"from": {
+														"x": 0.0,
+														"y": 0.5
+													},
+													"to": {
+														"x": 1.0,
+														"y": 0.5
+													}
+												},
+												"type": "Solid"
+											}
+										}
+									},
+									"effects": []
+								}
+							},
+							"name": "Triangle",
+							"id": -4705350944748254270,
+							"visible": true,
+							"locked": false,
+							"masks": [],
+							"transform": {
+								"scale": {
+									"value": {
+										"keyed": {
+											"x": 1.0,
+											"y": 1.0
+										}
+									},
+									"locked": true
+								},
+								"rot": {
+									"keyed": {
+										"x": 0.0,
+										"y": 0.0,
+										"z": 0.0
+									}
+								},
+								"translation": {
+									"keyed": {
+										"x": 150.0,
+										"y": 645.0,
+										"z": 0.0
+									}
+								}
+							},
+							"paintEffects": [],
+							"opacity": {
+								"keyed": 1.0
+							},
+							"blendMode": {
+								"keyed": "Normal"
+							},
+							"backgroundBlur": {
+								"value": {
+									"size": {
+										"keyed": 10.0
+									},
+									"opacity": {
+										"keyed": 0.5
+									},
+									"brightness": {
+										"keyed": 0.0
+									}
+								},
+								"enabled": false
+							},
+							"layer3d": {
+								"value": {
+									"material": {
+										"metallic": {
+											"keyed": 0.0
+										},
+										"roughness": {
+											"keyed": 0.4
+										}
+									},
+									"extrusion": {
+										"keyed": 100.0
+									}
+								},
+								"enabled": false
+							},
+							"selectedPath": null
+						},
+						{
+							"obj": {
+								"text": {
+									"content": {
+										"keyed": "New Text"
+									},
+									"styleSpans": [
+										{
+											"value": {
+												"font": "",
+												"size": 85.7675,
+												"fontStyle": {
+													"weight": "Normal",
+													"width": "Normal",
+													"slant": "Normal"
+												},
+												"underline": false,
+												"overLine": false,
+												"strikeThrough": false,
+												"color": [
+													0.53333336,
+													0.53333336,
+													0.53333336,
+													1.0
+												],
+												"stroke": {
+													"color": [
+														0.53333336,
+														0.53333336,
+														0.53333336,
+														1.0
+													],
+													"width": 0.0,
+													"cap": "Butt",
+													"join": "Mitter",
+													"dash": 10.0,
+													"gap": 0.0
+												},
+												"letterSpacing": 0.0
+											},
+											"from": 0,
+											"to": 2147483647
+										}
+									],
+									"layout": {
+										"text_box": {
+											"size": {
+												"value": {
+													"keyed": {
+														"width": 354.57,
+														"height": 101.0
+													}
+												},
+												"locked": false
+											},
+											"pivotX": 0.5,
+											"pivotY": 0.5
+										}
+									},
+									"align": {
+										"keyed": "Left"
+									},
+									"direction": {
+										"keyed": "LTR"
+									},
+									"textEffects": [],
+									"selection": null
+								}
+							},
+							"name": "Text",
+							"id": -7768109442588128841,
+							"visible": true,
+							"locked": false,
+							"masks": [],
+							"transform": {
+								"scale": {
+									"value": {
+										"keyed": {
+											"x": 1.0,
+											"y": 1.0
+										}
+									},
+									"locked": true
+								},
+								"rot": {
+									"keyed": {
+										"x": 0.0,
+										"y": 0.0,
+										"z": 0.0
+									}
+								},
+								"translation": {
+									"keyed": {
+										"x": 557.0,
+										"y": 526.0,
+										"z": 0.0
+									}
+								}
+							},
+							"paintEffects": [],
+							"opacity": {
+								"keyed": 1.0
+							},
+							"blendMode": {
+								"keyed": "Normal"
+							},
+							"backgroundBlur": {
+								"value": {
+									"size": {
+										"keyed": 10.0
+									},
+									"opacity": {
+										"keyed": 0.5
+									},
+									"brightness": {
+										"keyed": 0.0
+									}
+								},
+								"enabled": false
+							},
+							"layer3d": {
+								"value": {
+									"material": {
+										"metallic": {
+											"keyed": 0.0
+										},
+										"roughness": {
+											"keyed": 0.4
+										}
+									},
+									"extrusion": {
+										"keyed": 100.0
+									}
+								},
+								"enabled": false
+							},
+							"selectedPath": null
+						},
+						{
+							"obj": {
+								"scene": {
+									"source": 7758480884903595071,
+									"bounds": {
+										"size": {
+											"value": {
+												"keyed": {
+													"width": 428.83752,
+													"height": 222.17361
+												}
+											},
+											"locked": false
+										},
+										"pivotX": 0.5,
+										"pivotY": 0.5
+									},
+									"stroke": {
+										"opacity": {
+											"keyed": 1.0
+										},
+										"width": {
+											"keyed": 0.0
+										},
+										"cap": {
+											"keyed": "Butt"
+										},
+										"join": {
+											"keyed": "Mitter"
+										},
+										"dash": {
+											"keyed": 10.0
+										},
+										"gap": {
+											"keyed": 0.0
+										},
+										"paint": {
+											"keyed": {
+												"solid": [
+													0.0,
+													0.0,
+													0.0,
+													1.0
+												],
+												"gradient": {
+													"type": "Linear",
+													"stops": [
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 0.0
+														},
+														{
+															"color": [
+																0.0,
+																0.0,
+																0.0,
+																1.0
+															],
+															"position": 1.0
+														}
+													],
+													"from": {
+														"x": 0.0,
+														"y": 0.5
+													},
+													"to": {
+														"x": 1.0,
+														"y": 0.5
+													}
+												},
+												"type": "Solid"
+											}
+										}
+									}
+								}
+							},
+							"name": "Scene Component",
+							"id": -4112933104069360277,
+							"visible": true,
+							"locked": false,
+							"masks": [],
+							"transform": {
+								"scale": {
+									"value": {
+										"keyed": {
+											"x": 1.0,
+											"y": 1.0
+										}
+									},
+									"locked": true
+								},
+								"rot": {
+									"keyed": {
+										"x": 0.0,
+										"y": 0.0,
+										"z": -28.0
+									}
+								},
+								"translation": {
+									"keyed": {
+										"x": 1153.0,
+										"y": 619.0,
+										"z": 0.0
+									}
+								}
+							},
+							"paintEffects": [],
+							"opacity": {
+								"keyed": 1.0
+							},
+							"blendMode": {
+								"keyed": "Normal"
+							},
+							"backgroundBlur": {
+								"value": {
+									"size": {
+										"keyed": 10.0
+									},
+									"opacity": {
+										"keyed": 0.5
+									},
+									"brightness": {
+										"keyed": 0.0
+									}
+								},
+								"enabled": false
+							},
+							"layer3d": {
+								"value": {
+									"material": {
+										"metallic": {
+											"keyed": 0.0
+										},
+										"roughness": {
+											"keyed": 0.4
+										}
+									},
+									"extrusion": {
+										"keyed": 100.0
+									}
+								},
+								"enabled": false
+							},
+							"selectedPath": null
+						}
+					],
+					"animation": {
+						"length": 150,
+						"frame": 0
+					},
+					"id": -8341992414556435147,
+					"selectedLayers": []
+				},
+				{
+					"title": "Scene 1",
+					"translation": {
+						"x": 1855.4767,
+						"y": 0.0
+					},
+					"world": {
+						"size": {
+							"value": {
+								"width": 1655.4767,
+								"height": 857.67505
+							},
+							"locked": false
+						},
+						"fov": {
+							"keyed": 60.0
+						}
+					},
+					"bg": {
+						"opacity": {
+							"keyed": 1.0
+						},
+						"paint": {
+							"keyed": {
+								"solid": [
+									1.0,
+									0.20621449,
+									0.20621449,
+									1.0
+								],
+								"gradient": {
+									"type": "Linear",
+									"stops": [
+										{
+											"color": [
+												1.0,
+												1.0,
+												1.0,
+												1.0
+											],
+											"position": 0.0
+										},
+										{
+											"color": [
+												1.0,
+												1.0,
+												1.0,
+												1.0
+											],
+											"position": 1.0
+										}
+									],
+									"from": {
+										"x": 0.0,
+										"y": 0.5
+									},
+									"to": {
+										"x": 1.0,
+										"y": 0.5
+									}
+								},
+								"type": "Solid"
+							}
+						}
+					},
+					"layers": [],
+					"animation": {
+						"length": 150,
+						"frame": 0
+					},
+					"id": 7758480884903595071,
+					"selectedLayers": []
+				}
+			],
+			"selectedScene": -8341992414556435147,
+			"settings": {
+				"fps": 30,
+				"animUnits": "Frames",
+				"units": "Px",
+				"ppi": 72
+			}
+		},
+		"sequencer": null,
+		"settings": {
+			"ruler": false,
+			"guides": {
+				"value": [],
+				"enabled": false
+			},
+			"grid": {
+				"enabled": false,
+				"lockStep": true,
+				"steps": []
+			},
+			"snapping": {
+				"value": {
+					"scene": true,
+					"layers": false,
+					"grid": false,
+					"guides": false
+				},
+				"enabled": false
+			},
+			"autoKeys": false
+		}
+	}
+}
