@@ -36,6 +36,35 @@ declare __formatter_list_style=bullet
 declare __formatter_common_error_text="expected to be at least one character long not containing leading or trailing spaces"
 
 # [internal function, do not change]
+__formatter_fix_when_is_empty_or_with_invalid_characters() {
+    declare input="$1"
+    echo -n "$input" | sed --regexp-extended 's/^\s+|\s+$//g; s/\s+/ /g;'
+}
+
+# [internal function, do not change]
+__formatter_fix_when_is_invalid_header() {
+    declare header="$1"
+    echo -n "$header" | sed --regexp-extended 's/^\s+|\s+$//g; s/\s+/ /g; s/^#(\s*#)*\s*//;'
+}
+
+# [internal function, do not change]
+__formatter_fix_when_is_invalid_placeholder() {
+    declare placeholder="$1"
+
+    declare word_span="\/?[A-Za-z0-9]+"
+    declare word="$word_span([-/.]$word_span)*"
+    declare words="$word(\s$word)*"
+
+    echo -n "$placeholder" | sed --regexp-extended 's/\s+/ /g; s/\s*\|\s*/ | /g; s|/(.*/)+|/|g'
+}
+
+# [internal function, do not change]
+__formatter_fix_when_is_invalid_option() {
+    declare option="$1"
+    echo -n "$option" | sed --regexp-extended 's/\s+/ /g; s/\s*\|\s*/ | /g; s/\s*[-]+\s*//g'
+}
+
+# [internal function, do not change]
 __formatter_check_is_empty_or_with_invalid_characters() {
     declare input="$1"
 
@@ -66,13 +95,13 @@ __formatter_check_is_invalid_placeholder() {
     declare placeholder="$1"
 
     __formatter_check_is_empty_or_with_invalid_characters "$placeholder" && {
-        # shellcheck disable=SC2155
-        declare word_span="\/?[A-Za-z0-9]+"
+        declare placeholder="$1"
+        declare word_span="[A-Za-z0-9]+"
         declare word="$word_span([-/.]$word_span)*"
         declare words="$word(\s$word)*"
 
         # shellcheck disable=SC2155
-        declare trimmed_placeholder="$(echo -n "$placeholder" | sed --regexp-extended "s/^$words(\s\|\s$words)*$//")"
+        declare trimmed_placeholder="$(echo -n "$placeholder" | sed --regexp-extended "s/^\/?$words(\s\|\s$words)*$//")"
         [[ "$trimmed_placeholder" == "" ]]
         return $?
     }
@@ -98,9 +127,16 @@ __formatter_throw_if() {
     declare name="$2"
     declare message="$3"
     declare check="$4"
+    declare fix="$5"
 
     $check "$input" || {
         printf "%s %s\n" "$name" "$message"
+        
+        # shellcheck disable=SC2155
+        declare fix="$($fix "$input")"
+
+        [[ "$input" != "$fix" ]] &&
+            icdiff --show-all-spaces --label "Your input" <(echo "$input") --label "Possible fix" <(echo "$fix")
         return 1
     }
     return 0
@@ -113,7 +149,8 @@ __formatter_throw_if_is_empty_or_with_invalid_characters() {
 
     __formatter_throw_if "$input" "$name" \
         "$__formatter_common_error_text" \
-        __formatter_check_is_empty_or_with_invalid_characters
+        __formatter_check_is_empty_or_with_invalid_characters \
+        __formatter_fix_when_is_empty_or_with_invalid_characters
 }
 
 # [internal function, do not change]
@@ -123,7 +160,8 @@ __formatter_throw_if_is_invalid_header() {
 
     __formatter_throw_if "$input" "$name" \
         "$__formatter_common_error_text and without any leading # sigils" \
-        __formatter_check_is_invalid_header
+        __formatter_check_is_invalid_header \
+        __formatter_fix_when_is_invalid_header
 }
 
 # [internal function, do not change]
@@ -133,7 +171,8 @@ __formatter_throw_if_is_invalid_placeholder() {
 
     __formatter_throw_if "$placeholder" "$name" \
         "$__formatter_common_error_text and containing a sequence of words (possibly slash-split) separated by spaces and ' | '" \
-        __formatter_check_is_invalid_placeholder
+        __formatter_check_is_invalid_placeholder \
+        __formatter_fix_when_is_invalid_placeholder
 }
 
 # [internal function, do not change]
@@ -143,7 +182,8 @@ __formatter_throw_if_is_invalid_option() {
 
     __formatter_throw_if "$option" "$name" \
         "$__formatter_common_error_text and containing dash-separated words" \
-        __formatter_check_is_invalid_option
+        __formatter_check_is_invalid_option \
+        __formatter_fix_when_is_invalid_option
 }
 
 # [internal function, do not change]
