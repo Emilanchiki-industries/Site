@@ -54,37 +54,84 @@ __colors_get_color_name() {
 }
 
 # [internal function, do not change]
-__colors_throw_as_already_used_flag() {
-    declare flag="$1"
+__colors_throw_as_already_used_option() {
+    declare in_option="$1"
 
-    printf "$__colors_IDENTIFIER%s$__colors_RESET was already used before\n" "$flag" >&2
+    printf "$__colors_IDENTIFIER%s$__colors_RESET was already used before\n" "$in_option" >&2
     return $codes_INVALID_OPTION_ERROR
 }
 
 # [internal function, do not change]
 __declare_throw_as_unknown_option() {
-    declare option="$1"
+    declare in_option="$1"
 
-    printf "$__colors_IDENTIFIER%s$__colors_RESET is not known\n" "$option" >&2
+    printf "$__colors_IDENTIFIER%s$__colors_RESET is not known\n" "$in_option" >&2
+    return $codes_INVALID_OPTION_ERROR
+}
+
+# [internal function, do not change]
+__colors_throw_as_incompatible_options() {
+    declare in_option="$1"
+
+    printf "$__colors_IDENTIFIER%s$__colors_RESET is not compatible with other options used\n" "$in_option" >&2
+    return $codes_INVALID_OPTION_ERROR
+}
+
+# [internal function, do not change]
+__colors_throw_as_missing_option() {
+    declare in_option="$1"
+    declare in_missing_option="$2"
+
+    printf "$__colors_IDENTIFIER%s$__colors_RESET is missing for $__colors_IDENTIFIER%s$__colors_RESET\n" "$in_missing_option" "$in_option" >&2
     return $codes_INVALID_OPTION_ERROR
 }
 
 # [internal function, do not change]
 __declare_throw_if_invalid_color() {
-    declare option="$1"
-    declare argument="$2"
+    declare in_option="$1"
+    declare in_argument="$2"
 
-    __colors_get_color_base_code "$argument" >/dev/null || {
-        printf "$__colors_IDENTIFIER%s$__colors_RESET has an invalid color $__colors_VALUE%s$__colors_RESET\n" "$option" "$argument" >&2
+    __colors_get_color_base_code "$in_argument" >/dev/null || {
+        printf "$__colors_IDENTIFIER%s$__colors_RESET has an invalid color $__colors_VALUE%s$__colors_RESET\n" "$in_option" "$in_argument" >&2
         return $codes_INVALID_ARGUMENT_ERROR
     }
     return $codes_SUCCESS
+}
+
+__colors_check_is_true() {
+    declare in_command_line="$1"
+    declare in_trim_command="$2"
+    declare in_description="$3"
+
+    # shellcheck disable=SC2155
+    declare trimmed_command_line="$(echo -n "$in_command_line" | sed --regexp-extended "$in_trim_command")"
+    [[ "$in_command_line" == "$trimmed_command_line" ]] || {
+        printf "${__colors_IDENTIFIER}hint${__colors_RESET}: %s\n" "$in_description"
+        return $codes_INVALID_ARGUMENT_ERROR
+    }
+    return $codes_SUCCESS
+}
+
+__colors_check_is_background_after_foreground() {
+    declare in_command_line="$1"
+    __colors_check_is_true "$in_command_line" 's/(--background|-b) (--foreground|-f)//' '--background | -b should be placed after --foreground | -f'
+}
+
+__colors_check_are_long_options_used() {
+    declare in_command_line="$1"
+    __colors_check_is_true "$in_command_line" 's/\<-[^-]+\>//' 'long options should be preferred for readability'
+}
+
+__colors_check_intensive_is_used_for_brightening_both_foreground_and_background() {
+    declare in_command_line="$1"
+    __colors_check_is_true "$in_command_line" 's/(--intensive-(fore|back)ground|-i[fb]) (--intensive-(fore|back)ground|-i[fb])//' '--intensive | -i should be used to brighten both foreground and background at once'
 }
 
 # Obtain ANSI color sequence
 # Signature: colors_to_ansi {options}
 #
 # Where {options} is a sequence of unique options:
+#   --analyze | -a analyze passed options and give advices on a better usage where each recommendation is put on a separate line
 #   --foreground | -f {color} set a foreground color
 #   --background | -b {color} set a background color
 #   --intensive-foreground | -if use brighter foreground color
@@ -101,6 +148,7 @@ __declare_throw_if_invalid_color() {
 colors_to_ansi() {
     declare code='\e['
 
+    declare is_analyze_met=false
     declare is_foreground_met=false
     declare is_background_met=false
     declare is_bold_met=false
@@ -116,15 +164,26 @@ colors_to_ansi() {
     declare foreground=""
     declare background=""
 
+    declare command_line=""
+    declare argument_count="$#"
+
     while [[ $# -gt 0 ]]
     do
         declare option="$1"
         declare argument="$2"
+        command_line="$command_line $option"
 
         case "$option" in
+            --analyze | -a)
+                 [[ "$is_analyze_met" == true ]] && {
+                    __colors_throw_as_already_used_option '--analyze | -a' || return
+                }
+
+                is_analyze_met=true
+                ;;
             --foreground | -f)
                  [[ "$is_foreground_met" == true ]] && {
-                    __colors_throw_as_already_used_flag '--foreground | -f' || return
+                    __colors_throw_as_already_used_option '--foreground | -f' || return
                 }
                 __declare_throw_if_invalid_color '--foreground | -f' "$argument" || return
 
@@ -134,7 +193,7 @@ colors_to_ansi() {
                 ;;
             --background | -b)
                  [[ "$is_background_met" == true ]] && {
-                    __colors_throw_as_already_used_flag '--background | -b' || return
+                    __colors_throw_as_already_used_option '--background | -b' || return
                 }
                 __declare_throw_if_invalid_color '--background | -b' "$argument" || return
 
@@ -143,15 +202,15 @@ colors_to_ansi() {
                 shift
                 ;;
             --intensive-foreground | -if)
-                 [[ "$is_intensive_foreground_met" == true ]] && __colors_throw_as_already_used_flag '--intensive-foreground | -if'
+                 [[ "$is_intensive_foreground_met" == true ]] && __colors_throw_as_already_used_option '--intensive-foreground | -if'
                 is_intensive_foreground_met=true
                 ;;
             --intensive-background | -ib)
-                 [[ "$is_intensive_background_met" == true ]] && __colors_throw_as_already_used_flag '--intensive-background | -ib'
+                 [[ "$is_intensive_background_met" == true ]] && __colors_throw_as_already_used_option '--intensive-background | -ib'
                 is_intensive_background_met=true
                 ;;
             --intensive | -i)
-                 [[ "$is_intensive_met" == true ]] && __colors_throw_as_already_used_flag '--intensive | -i'
+                 [[ "$is_intensive_met" == true ]] && __colors_throw_as_already_used_option '--intensive | -i'
                 
                 is_intensive_met=true
                 is_intensive_foreground_met=true
@@ -159,27 +218,27 @@ colors_to_ansi() {
                 ;;
 
             --bold | -B)
-                 [[ "$is_bold_met" == true ]] && __colors_throw_as_already_used_flag '--bold | -B'
+                 [[ "$is_bold_met" == true ]] && __colors_throw_as_already_used_option '--bold | -B'
                 is_bold_met=true
                 ;;
             --italic | -I)
-                 [[ "$is_italic_met" == true ]] && __colors_throw_as_already_used_flag '--italic | -I'
+                 [[ "$is_italic_met" == true ]] && __colors_throw_as_already_used_option '--italic | -I'
                 is_italic_met=true
                 ;;
             --underline | -U)
-                 [[ "$is_underline_met" == true ]] && __colors_throw_as_already_used_flag '--underline | -U'
+                 [[ "$is_underline_met" == true ]] && __colors_throw_as_already_used_option '--underline | -U'
                 is_underline_met=true
                 ;;
             --overline | -O)
-                 [[ "$is_overline_met" == true ]] && __colors_throw_as_already_used_flag '--overline | -O'
+                 [[ "$is_overline_met" == true ]] && __colors_throw_as_already_used_option '--overline | -O'
                 is_overline_met=true
                 ;;
             --strikethrough | -S)
-                 [[ "$is_strikethrough_met" == true ]] && __colors_throw_as_already_used_flag '--strikethrough | -S'
+                 [[ "$is_strikethrough_met" == true ]] && __colors_throw_as_already_used_option '--strikethrough | -S'
                 is_strikethrough_met=true
                 ;;
             --reset | -r)
-                 [[ "$is_reset_met" == true ]] && __colors_throw_as_already_used_flag '--reset | -r'
+                 [[ "$is_reset_met" == true ]] && __colors_throw_as_already_used_option '--reset | -r'
                 
                 is_reset_met=true
                 ;;
@@ -190,6 +249,29 @@ colors_to_ansi() {
 
         shift
     done
+
+    if [[ "$is_analyze_met" == false ]] && [[ "$is_reset_met" == true ]] && (( $argument_count > 1 )); then
+        __colors_throw_as_incompatible_options '--reset | -r'
+        return
+    fi
+
+    if [[ "$is_intensive_foreground_met" == true ]] && [[ "$is_foreground_met" == false ]]; then
+        __colors_throw_as_missing_option '--intensive-foreground | -if' '--foreground | -f'
+        return
+    fi
+
+    if [[ "$is_intensive_background_met" == true ]] && [[ "$is_background_met" == false ]]; then
+        __colors_throw_as_missing_option '--intensive-background | -ib' '--backgroung | -b'
+        return
+    fi
+
+    [[ "$is_analyze_met" == true ]] && {
+        echo 'Style-related issues are listed below:'
+        __colors_check_is_background_after_foreground "$command_line"
+        __colors_check_are_long_options_used "$command_line"
+        __colors_check_intensive_is_used_for_brightening_both_foreground_and_background "$command_line"
+        return $codes_SUCCESS
+    }
 
     [[ "$is_reset_met" == true ]] && {
         # shellcheck disable=SC2028
@@ -234,16 +316,16 @@ colors_to_ansi() {
 #   53: make font overlined
 #   9: make font strikethrough
 colors_from_ansi() {
-    declare input="$1"
+    declare in_ansi_sequence="$1"
     # shellcheck disable=SC2155
-    declare stripped="$(echo -n "$input" | sed --regexp-extended 's/^\\e\[|m$//g')"
+    declare stripped="$(echo -n "$in_ansi_sequence" | sed --regexp-extended 's/^\\e\[|m$//g')"
 
-    [[ -z "$input" ]] && {
+    [[ -z "$in_ansi_sequence" ]] && {
         # shellcheck disable=SC2059
         printf "Input sequence doesn't contain anything\n" >&2
         return $codes_INVALID_ARGUMENT_ERROR
     }
-    [[ "$input" == "$stripped" ]] && {
+    [[ "$in_ansi_sequence" == "$stripped" ]] && {
         # shellcheck disable=SC2059
         printf "Input sequence doesn't start with $__colors_IDENTIFIER\\\e$__colors_RESET or doesn't end with ${__colors_IDENTIFIER}m$__colors_RESET\n" >&2
         return $codes_INVALID_ARGUMENT_ERROR
@@ -309,15 +391,3 @@ colors_from_ansi() {
 
     echo -n "$command_line" | sed --regexp-extended 's/\s\s+/ /g; s/^\s*//'
 }
-
-# shellcheck disable=SC2034
-declare colors_EXAMPLE="$(colors_to_ansi --intensive-foreground --background green --foreground white --bold)"
-declare colors_SPECIAL_CHARACTER="$(colors_to_ansi --foreground red --bold)"
-declare colors_PLACEHOLDER="$(colors_to_ansi --foreground cyan)"
-declare colors_COMMAND="$(colors_to_ansi --foreground cyan)"
-declare colors_OPTION="$(colors_to_ansi --foreground yellow)"
-declare colors_HEADER="$(colors_to_ansi --foreground green)"
-declare colors_FIX_LABEL="$(colors_to_ansi --intensive-foreground --background green --foreground white --bold)"
-declare colors_FIX_PREFIX="$(colors_to_ansi --intensive-foreground --background green --foreground white --bold)"
-
-declare colors_RESET="$(colors_to_ansi --reset)"
