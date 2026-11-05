@@ -123,7 +123,7 @@ colors_to_ansi() {
 
         case "$option" in
             --foreground | -f)
-                [[ $is_foreground_met == true ]] && {
+                 [[ "$is_foreground_met" == true ]] && {
                     __colors_throw_as_already_used_flag '--foreground | -f' || return
                 }
                 __declare_throw_if_invalid_color '--foreground | -f' "$argument" || return
@@ -133,7 +133,7 @@ colors_to_ansi() {
                 shift
                 ;;
             --background | -b)
-                [[ $is_background_met == true ]] && {
+                 [[ "$is_background_met" == true ]] && {
                     __colors_throw_as_already_used_flag '--background | -b' || return
                 }
                 __declare_throw_if_invalid_color '--background | -b' "$argument" || return
@@ -143,43 +143,43 @@ colors_to_ansi() {
                 shift
                 ;;
             --intensive-foreground | -if)
-                [[ $is_intensive_foreground_met == true ]] && __colors_throw_as_already_used_flag '--intensive-foreground | -if'
+                 [[ "$is_intensive_foreground_met" == true ]] && __colors_throw_as_already_used_flag '--intensive-foreground | -if'
                 is_intensive_foreground_met=true
                 ;;
             --intensive-background | -ib)
-                [[ $is_intensive_background_met == true ]] && __colors_throw_as_already_used_flag '--intensive-background | -ib'
+                 [[ "$is_intensive_background_met" == true ]] && __colors_throw_as_already_used_flag '--intensive-background | -ib'
                 is_intensive_background_met=true
                 ;;
             --intensive | -i)
-                [[ $is_intensive_met == true ]] && __colors_throw_as_already_used_flag '--intensive | -i'
+                 [[ "$is_intensive_met" == true ]] && __colors_throw_as_already_used_flag '--intensive | -i'
                 
                 is_intensive_met=true
                 is_intensive_foreground_met=true
                 is_intensive_background_met=true
                 ;;
 
-            --bold)
-                [[ $is_bold_met == true ]] && __colors_throw_as_already_used_flag '--bold'
+            --bold | -B)
+                 [[ "$is_bold_met" == true ]] && __colors_throw_as_already_used_flag '--bold | -B'
                 is_bold_met=true
                 ;;
-            --italic)
-                [[ $is_italic_met == true ]] && __colors_throw_as_already_used_flag '--italic'
+            --italic | -I)
+                 [[ "$is_italic_met" == true ]] && __colors_throw_as_already_used_flag '--italic | -I'
                 is_italic_met=true
                 ;;
-            --underline)
-                [[ $is_underline_met == true ]] && __colors_throw_as_already_used_flag '--underline'
+            --underline | -U)
+                 [[ "$is_underline_met" == true ]] && __colors_throw_as_already_used_flag '--underline | -U'
                 is_underline_met=true
                 ;;
-            --overline)
-                [[ $is_overline_met == true ]] && __colors_throw_as_already_used_flag '--overline'
+            --overline | -O)
+                 [[ "$is_overline_met" == true ]] && __colors_throw_as_already_used_flag '--overline | -O'
                 is_overline_met=true
                 ;;
-            --strikethrough)
-                [[ $is_strikethrough_met == true ]] && __colors_throw_as_already_used_flag '--strikethrough'
+            --strikethrough | -S)
+                 [[ "$is_strikethrough_met" == true ]] && __colors_throw_as_already_used_flag '--strikethrough | -S'
                 is_strikethrough_met=true
                 ;;
             --reset | -r)
-                [[ $is_reset_met == true ]] && __colors_throw_as_already_used_flag '--reset | -r'
+                 [[ "$is_reset_met" == true ]] && __colors_throw_as_already_used_flag '--reset | -r'
                 
                 is_reset_met=true
                 ;;
@@ -299,11 +299,11 @@ colors_from_ansi() {
         esac
     done
 
-    if [[ $is_intensive_foreground_met == true ]] && [[ $is_intensive_background_met == true ]]; then
+    if  [[ "$is_intensive_foreground_met" == true ]] && [[ "$is_intensive_background_met" == true ]]; then
         command_line="--intensive ${command_line}"
-    elif [[ $is_intensive_foreground_met == true ]]; then
+    elif  [[ "$is_intensive_foreground_met" == true ]]; then
         command_line="--intensive-foreground ${command_line}"
-    elif [[ $is_intensive_background_met == true ]]; then
+    elif  [[ "$is_intensive_background_met" == true ]]; then
         command_line="--intensive-background ${command_line}"
     fi
 
