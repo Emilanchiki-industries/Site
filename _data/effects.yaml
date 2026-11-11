@@ -153,7 +153,7 @@
     - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.glare.color.enabled.keyed
 
 - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.overlay_fill
-  name: Overlay fill
+  name: Overlay Fill
   category: decorating
   type: layer
   properties:
@@ -181,3 +181,415 @@
       units: unavailable
       json-type: boolean
       default: false
+
+- id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.gradient_wipe
+  name: Gradient Wipe
+  type: layer
+  category: masking
+  properties:
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.gradient_wipe.type.keyed
+      name: Type
+      description: |
+        Determines whether the object is masked from a certain side of a masking line or a circle mask is applied 
+        When Linear masking is selected a line splitting an object into two parts appears and the first object part
+        is hidden while the other is shown on the opposite side of the line
+      type: enumeration
+      units: unavailable
+      json-type: string
+      default: Linear
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.gradient_wipe.linearAngle.keyed
+      name: Angle
+      description: |
+        Specifies a rotation angle of the masking line
+
+        - 0 angle makes the line hide bottom object part and points to -X direction
+        - 90 angle makes the line hide left object part and points in -Y direction
+        - 180 angle makes the line hide top object part and points in X direction
+        - 270 angle makes the line hide right object part and points in Y direction
+      type: number
+      units: degrees
+      json-type: number
+      default: 0
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.gradient_wipe.radialCenter.keyed.x
+      name: Center / X
+      description: |
+        Specifies displacement of masking circle center in percents relatively to the object width
+
+        - 0 displacement points to the left edge of the object
+        - 50 displacement points to the center's X of the object
+        - 100 displacement points to the right edge of the object
+      type: number
+      units: percents
+      json-type: number
+      default: 50
+      range:
+        from: 0
+        to: 100
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.gradient_wipe.radialCenter.keyed.y
+      name: Center / Y
+      description: |
+        Specifies displacement of masking circle center in percents relatively to the object height
+
+        - 0 displacement points to the top edge of the object
+        - 50 displacement points to the center's Y of the object
+        - 100 displacement points to the bottom edge of the object
+      type: number
+      units: percents
+      json-type: number
+      default: 50
+      range:
+        from: 0
+        to: 100
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.gradient_wipe.radialCenter.progress.keyed
+      name: Progress
+      description: |
+        Specifies how much masking process progressed
+
+        - 0 means masking has not been started
+        - 50 means half of masking process is done
+        - 100 means complete object is hidden
+      type: number
+      units: percents
+      json-type: number
+      default: 50
+      range:
+        from: 0
+        to: 100
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.gradient_wipe.radialCenter.feather.keyed
+      name: Progress
+      description: Specifies masking border blur strength
+      type: number
+      units: unavailable
+      json-type: number
+      default: 0
+      range:
+        from: 0
+        to: infinity
+
+- id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.perspective_deform
+  name: Perspective Deform
+  type: layer
+  category: deforming
+  properties:
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.perspective_deform.keyed.tl.x
+      name: Top left X
+      description: Specifies top left deform plane X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.perspective_deform.keyed.tl.y
+      name: Top left Y
+      description: Specifies top left deform plane Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.perspective_deform.keyed.tr.x
+      name: Top right X
+      description: Specifies top right deform plane X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.perspective_deform.keyed.tr.y
+      name: Top right Y
+      description: Specifies top right deform plane Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.perspective_deform.keyed.bl.x
+      name: Bottom left X
+      description: Specifies bottom left deform plane X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.perspective_deform.keyed.bl.y
+      name: Bottom left Y
+      description: Specifies bottom left deform plane Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.perspective_deform.keyed.br.x
+      name: Bottom right X
+      description: Specifies bottom left deform plane X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.perspective_deform.keyed.br.y
+      name: Bottom left Y
+      description: Specifies bottom right deform plane Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+- id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform
+  name: Bezie Deform
+  type: layer
+  category: deforming
+  properties:
+    # Top left node:
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.0.x
+      name: Top left X
+      description: Specifies top left node X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.0.y
+      name: Top left Y
+      description: Specifies top left node Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.1.x
+      name: Top left node horizontal handle X
+      description: Specifies top left node horizontal handle X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.1.y
+      name: Top left node horizontal handle Y
+      description: Specifies top left node horizontal handle Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.11.x
+      name: Top left node vertical handle X
+      description: Specifies top left node vertical handle X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.11.y
+      name: Top left node vertical handle Y
+      description: Specifies top left node vertical handle Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    # Top right node:
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.3.x
+      name: Top right X
+      description: Specifies top right node X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.3.y
+      name: Top right Y
+      description: Specifies top right node Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.2.x
+      name: Top right node horizontal handle X
+      description: Specifies top right node horizontal handle X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.2.y
+      name: Top right node horizontal handle Y
+      description: Specifies top right node horizontal handle Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.4.x
+      name: Top right node vertical handle X
+      description: Specifies top right node vertical handle X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.4.y
+      name: Top right node vertical handle Y
+      description: Specifies top right node vertical handle Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    # Bottom left node:
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.9.x
+      name: Bottom left X
+      description: Specifies bottom left node X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.9.y
+      name: Bottom left Y
+      description: Specifies bottom left node Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.8.x
+      name: Bottom left node horizontal handle X
+      description: Specifies bottom left node horizontal handle X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.8.y
+      name: Bottom left node horizontal handle Y
+      description: Specifies bottom left node horizontal handle Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.10.x
+      name: Bottom left node vertical handle X
+      description: Specifies bottom left node vertical handle X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.10.y
+      name: Bottom left node vertical handle Y
+      description: Specifies bottom left node vertical handle Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    # Bottom right node:
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.6.x
+      name: Bottom right X
+      description: Specifies bottom right node X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.6.y
+      name: Bottom right Y
+      description: Specifies bottom right node Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.7.x
+      name: Bottom right node horizontal handle X
+      description: Specifies bottom right node horizontal handle X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.7.y
+      name: Bottom right node horizontal handle Y
+      description: Specifies bottom right node horizontal handle Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.5.x
+      name: Bottom right node vertical handle X
+      description: Specifies bottom right node vertical handle X coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+    - id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.bezier_deform.keyed.keyed.5.y
+      name: Bottom right node vertical handle Y
+      description: Specifies bottom right node vertical handle Y coordinate
+      type: number
+      units: percents
+      json-type: number
+      default: 0
+      disable-linting-checks:
+        - enforce-matching-range-range-for-percents-units
+
+- id: projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.puppet_deform
+  name: Puppet Deform
+  type: layer
+  category: deforming
+  properties:
+    - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.puppet_deform.contours
+    - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.puppet_deform.handles.keyed
+    - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.puppet_deform.handles.keyed.*.initialPos
+    - projectEdit.project.scenes.{scene}.layers.{layer}.paintEffects.value.puppet_deform.handles.keyed.*.offset
