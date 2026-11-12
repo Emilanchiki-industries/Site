@@ -47,6 +47,7 @@
         "required": [
             "id",
             "name",
+            "description",
             "type",
             "category",
             "properties"
@@ -59,6 +60,10 @@
             "name": {
                 "description": "An effect name displayed in UI when choosing it like Blur\nUsed to infer what sample demonstration picture to use for this effect",
                 "$ref": "#/$defs/name"
+            },
+            "description": {
+                "description": "An effect description",
+                "$ref": "#/$defs/description"
             },
             "type": {
                 "title": "type",
@@ -124,19 +129,12 @@
                             "type": "object",
                             "additionalProperties": false,
                             "required": [
-                                "id",
                                 "name",
                                 "description",
                                 "type",
-                                "units",
-                                "json-type",
-                                "default"
+                                "units"
                             ],
                             "properties": {
-                                "id": {
-                                    "description": "A full path to the property in JSON format where unknown values are represented as descriptive placeholders like {object}",
-                                    "$ref": "#/$defs/id"
-                                },
                                 "name": {
                                     "description": "A property name displayed in UI when choosing it like Blur",
                                     "$ref": "#/$defs/name"
@@ -187,18 +185,51 @@
                                         "unavailable"
                                     ]
                                 },
-                                "json-type": {
-                                    "title": "type",
-                                    "description": "A JSON property type it belongs to like integer",
-                                    "type": "string",
-                                    "enum": [
-                                        "boolean",
-                                        "integer",
-                                        "number",
-                                        "string",
-                                        "array",
-                                        "object"
+                                "enumeration": {
+                                    "title": "enumeration",
+                                    "description": "A list of all possible values for enumeration property",
+                                    "minItems": 1,
+                                    "uniqueItems": true,
+                                    "oneOf": [
+                                        {
+                                            "items": {
+                                                "description": "A possible value for enumeration property where corresponding JSON value is exactly the same",
+                                                "$ref": "#/$defs/name"
+                                            }
+                                        },
+                                        {
+                                            "items": {
+                                                "description": "A possible value for enumeration property",
+                                                "type": "object",
+                                                "required": ["ui", "json"],
+                                                "additionalProperties": false,
+                                                "properties": {
+                                                    "ui": {
+                                                        "description": "A value displayed in UI",
+                                                        "$ref": "#/$defs/name"
+                                                    },
+                                                    "json": {
+                                                        "description": "A corresponding JSON value displayed",
+                                                        "$ref": "#/$defs/name"
+                                                    }
+                                                }
+                                            }
+                                        }
                                     ]
+                                },
+                                "features": {
+                                    "title": "features",
+                                    "description": "Features not supported by this property value compared to its default implementation in different program parts",
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "color": {
+                                            "title": "color",
+                                            "description": "Features not supported by a color property",
+                                            "type": "string",
+                                            "enum": ["gradient"]
+                                        }
+                                    }
                                 },
                                 "default": {
                                     "title": "default",
@@ -252,6 +283,35 @@
                                         }
                                     }
                                 },
+                                "json": {
+                                    "title": "json",
+                                    "description": "A corresponding JSON property",
+                                    "type": "object",
+                                    "required": [
+                                        "id",
+                                        "type"
+                                    ],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "id": {
+                                            "description": "A full path to the property in JSON format where unknown values are represented as descriptive placeholders like {object}",
+                                            "$ref": "#/$defs/id"
+                                        },
+                                        "type": {
+                                            "title": "type",
+                                            "description": "A corresponding JSON property type it belongs to like integer",
+                                            "type": "string",
+                                            "enum": [
+                                                "boolean",
+                                                "integer",
+                                                "number",
+                                                "string",
+                                                "array",
+                                                "object"
+                                            ]
+                                        }
+                                    }
+                                },
                                 "disable-linting-checks": {
                                     "title": "disable linting check",
                                     "description": "A capability to disable certain linting checks explicitly",
@@ -266,64 +326,16 @@
                                             {
                                                 "oneOf": [
                                                     {
-                                                        "description": "Disable all rules enforcing matching types",
-                                                        "const": "enforce-matching-types"
+                                                        "description": "Don't check whether type matches json.type",
+                                                        "const": "types"
                                                     },
                                                     {
-                                                        "description": "Disable the following rule: if type == integer or type == number then json-type == integer or json-type == number",
-                                                        "const": "enforce-matching-numeric-types"
+                                                        "description": "Don't check whether correct units are set for specific type",
+                                                        "const": "units"
                                                     },
                                                     {
-                                                        "description": "Disable the following rule: if type == text then json-type == string",
-                                                        "const": "enforce-matching-string-types"
-                                                    },
-                                                    {
-                                                        "description": "Disable the following rule: if type == enumeration then json-type == string",
-                                                        "const": "enforce-matching-enumeration-types"
-                                                    },
-                                                    {
-                                                        "description": "Disable the following rule: if type == color then json-type == array or json-type == object",
-                                                        "const": "enforce-matching-color-types"
-                                                    },
-                                                    {
-                                                        "description": "Disable the following rule: if type == switch then json-type == boolean",
-                                                        "const": "enforce-matching-switch-types"
-                                                    },
-                                                    {
-                                                        "description": "Disable all rules enforcing matching units",
-                                                        "const": "enforce-matching-units"
-                                                    },
-                                                    {
-                                                        "description": "Disable the following rule: if type == text then units == unavailable",
-                                                        "const": "enforce-no-units-for-string-type"
-                                                    },
-                                                    {
-                                                        "description": "Disable the following rule: if type == enumeration then units == unavailable",
-                                                        "const": "enforce-no-units-for-enumeration-type"
-                                                    },
-                                                    {
-                                                        "description": "Disable the following rule: if type == color then units == unavailable",
-                                                        "const": "enforce-no-units-for-color-type"
-                                                    },
-                                                    {
-                                                        "description": "Disable the following rule: if type == switch then units == unavailable",
-                                                        "const": "enforce-no-units-for-switch-type"
-                                                    },
-                                                    {
-                                                        "description": "Disable all rules enforcing matching value ranges",
-                                                        "const": "enforce-matching-range"
-                                                    },
-                                                    {
-                                                        "description": "Disable the following rule: if units == percents then default == 0..100",
-                                                        "const": "enforce-matching-default-range-for-percents-units"
-                                                    },
-                                                    {
-                                                        "description": "Disable the following rule: if units == percents then from == 0..100 && to == 0..100",
-                                                        "const": "enforce-matching-range-range-for-percents-units"
-                                                    },
-                                                    {
-                                                        "description": "Disable the following rule: if type == switch then default == boolean",
-                                                        "const": "enforce-matching-default-range-for-switch-type"
+                                                        "description": "Don't check whether default and range values are specified where type permits it and units",
+                                                        "const": "ranges"
                                                     }
                                                 ]
                                             }
@@ -334,47 +346,148 @@
                             "not": {
                                 "anyOf": [
                                     {
-                                        "$comment": "if type == integer or type == number then json-type == integer or json-type == number",
+                                        "$comment": "if type == integer then json.type == integer",
                                         "properties": {
                                             "disable-linting-checks": {
                                                 "not": {
                                                     "contains": {
-                                                        "enum": ["enforce-matching-types", "enforce-matching-numeric-types"]
+                                                        "const": "types"
                                                     }
                                                 }
                                             },
                                             "type": {
-                                                "enum": [
-                                                    "integer",
-                                                    "number"
-                                                ]
+                                                "const": "integer"
                                             },
-                                            "json-type": {
-                                                "not": {
-                                                    "enum": [
-                                                        "integer",
-                                                        "number"
-                                                    ]
+                                            "json": {
+                                                "properties": {
+                                                    "type": {
+                                                        "not": {
+                                                            "const": "integer"
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     },
                                     {
-                                        "$comment": "if type == text then json-type == string",
+                                        "$comment": "if type == number then json.type == number",
                                         "properties": {
                                             "disable-linting-checks": {
                                                 "not": {
                                                     "contains": {
-                                                        "enum": ["enforce-matching-types", "enforce-matching-string-types"]
+                                                        "const": "types"
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "const": "number"
+                                            },
+                                            "json": {
+                                                "properties": {
+                                                    "type": {
+                                                        "not": {
+                                                            "const": "number"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == text then json.type == string",
+                                        "properties": {
+                                            "disable-linting-checks": {
+                                                "not": {
+                                                    "contains": {
+                                                        "const": "types"
                                                     }
                                                 }
                                             },
                                             "type": {
                                                 "const": "text"
                                             },
-                                            "json-type": {
+                                            "json": {
+                                                "properties": {
+                                                    "type": {
+                                                        "not": {
+                                                            "const": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == enumeration then json.type == string",
+                                        "properties": {
+                                            "disable-linting-checks": {
                                                 "not": {
-                                                    "const": "string"
+                                                    "contains": {
+                                                        "const": "types"
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "const": "enumeration"
+                                            },
+                                            "json": {
+                                                "properties": {
+                                                    "type": {
+                                                        "not": {
+                                                            "const": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == color then json.type == array or json.type == object",
+                                        "properties": {
+                                            "disable-linting-checks": {
+                                                "not": {
+                                                    "contains": {
+                                                        "const": "types"
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "const": "color"
+                                            },
+                                            "json": {
+                                                "properties": {
+                                                    "type": {
+                                                        "not": {
+                                                            "enum": [
+                                                                "array",
+                                                                "object"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == switch then json.type == boolean",
+                                        "properties": {
+                                            "disable-linting-checks": {
+                                                "not": {
+                                                    "contains": {
+                                                        "const": "types"
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "const": "switch"
+                                            },
+                                            "json": {
+                                                "properties": {
+                                                    "type": {
+                                                        "not": {
+                                                            "const": "boolean"
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -385,7 +498,7 @@
                                             "disable-linting-checks": {
                                                 "not": {
                                                     "contains": {
-                                                        "enum": ["enforce-matching-units", "enforce-no-units-for-string-type"]
+                                                        "const": "units"
                                                     }
                                                 }
                                             },
@@ -400,32 +513,12 @@
                                         }
                                     },
                                     {
-                                        "$comment": "if type == enumeration then json-type == string",
-                                        "properties": {
-                                            "disable-linting-checks": {
-                                                "not": {
-                                                    "contains": {
-                                                        "enum": ["enforce-matching-types", "enforce-matching-enumeration-types"]
-                                                    }
-                                                }
-                                            },
-                                            "type": {
-                                                "const": "enumeration"
-                                            },
-                                            "json-type": {
-                                                "not": {
-                                                    "const": "string"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    {
                                         "$comment": "if type == enumeration then units == unavailable",
                                         "properties": {
                                             "disable-linting-checks": {
                                                 "not": {
                                                     "contains": {
-                                                        "enum": ["enforce-matching-units", "enforce-no-units-for-enumeration-type"]
+                                                        "const": "units"
                                                     }
                                                 }
                                             },
@@ -435,29 +528,6 @@
                                             "units": {
                                                 "not": {
                                                     "const": "unavailable"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "$comment": "if type == color then json-type == array or json-type == object",
-                                        "properties": {
-                                            "disable-linting-checks": {
-                                                "not": {
-                                                    "contains": {
-                                                        "enum": ["enforce-matching-types", "enforce-matching-color-types"]
-                                                    }
-                                                }
-                                            },
-                                            "type": {
-                                                "const": "color"
-                                            },
-                                            "json-type": {
-                                                "not": {
-                                                    "enum": [
-                                                        "array",
-                                                        "object"
-                                                    ]
                                                 }
                                             }
                                         }
@@ -468,7 +538,7 @@
                                             "disable-linting-checks": {
                                                 "not": {
                                                     "contains": {
-                                                        "enum": ["enforce-matching-units", "enforce-no-units-for-color-type"]
+                                                        "const": "units"
                                                     }
                                                 }
                                             },
@@ -483,32 +553,12 @@
                                         }
                                     },
                                     {
-                                        "$comment": "if type == switch then json-type == boolean",
-                                        "properties": {
-                                            "disable-linting-checks": {
-                                                "not": {
-                                                    "contains": {
-                                                        "enum": ["enforce-matching-types", "enforce-matching-switch-types"]
-                                                    }
-                                                }
-                                            },
-                                            "type": {
-                                                "const": "switch"
-                                            },
-                                            "json-type": {
-                                                "not": {
-                                                    "const": "boolean"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    {
                                         "$comment": "if type == switch then units == unavailable",
                                         "properties": {
                                             "disable-linting-checks": {
                                                 "not": {
                                                     "contains": {
-                                                        "enum": ["enforce-matching-units", "enforce-no-units-for-switch-type"]
+                                                        "const": "units"
                                                     }
                                                 }
                                             },
@@ -523,12 +573,51 @@
                                         }
                                     },
                                     {
+                                        "$comment": "if units == percents then from == 0..100 and to == 0..100",
+                                        "properties": {
+                                            "disable-linting-checks": {
+                                                "not": {
+                                                    "contains": {
+                                                        "const": "ranges"
+                                                    }
+                                                }
+                                            },
+                                            "units": {
+                                                "const": "percents"
+                                            },
+                                            "range": {
+                                                "anyOf": [
+                                                    {
+                                                        "properties": {
+                                                            "from": {
+                                                                "not": {
+                                                                    "minimum": 0,
+                                                                    "maximum": 100
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "to": {
+                                                                "not": {
+                                                                    "minimum": 0,
+                                                                    "maximum": 100
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    {
                                         "$comment": "if units == percents then default == 0..100",
                                         "properties": {
                                             "disable-linting-checks": {
                                                 "not": {
                                                     "contains": {
-                                                        "enum": ["enforce-matching-ranges", "enforce-matching-default-range-for-percents-units"]
+                                                        "const": "ranges"
                                                     }
                                                 }
                                             },
@@ -544,71 +633,41 @@
                                         }
                                     },
                                     {
-                                        "$comment": "if units == percents then from == 0..100",
+                                        "$comment": "if type == integer then default == integer",
                                         "properties": {
                                             "disable-linting-checks": {
                                                 "not": {
                                                     "contains": {
-                                                        "enum": ["enforce-matching-ranges", "enforce-matching-range-range-for-percents-units"]
-                                                    }
-                                                }
-                                            },
-                                            "units": {
-                                                "const": "percents"
-                                            },
-                                            "range": {
-                                                "properties": {
-                                                    "from": {
-                                                        "not": {
-                                                            "minimum": 0,
-                                                            "maximum": 100
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "$comment": "if units == percents then to == 0..100",
-                                        "properties": {
-                                            "disable-linting-checks": {
-                                                "not": {
-                                                    "contains": {
-                                                        "enum": ["enforce-matching-ranges", "enforce-matching-range-range-for-percents-units"]
-                                                    }
-                                                }
-                                            },
-                                            "units": {
-                                                "const": "percents"
-                                            },
-                                            "range": {
-                                                "properties": {
-                                                    "to": {
-                                                        "not": {
-                                                            "minimum": 0,
-                                                            "maximum": 100
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "$comment": "if type == switch then default == boolean",
-                                        "properties": {
-                                            "disable-linting-checks": {
-                                                "not": {
-                                                    "contains": {
-                                                        "enum": ["enforce-matching-ranges", "enforce-matching-default-range-for-switch-type"]
+                                                        "const": "ranges"
                                                     }
                                                 }
                                             },
                                             "type": {
-                                                "const": "switch"
+                                                "const": "integer"
                                             },
                                             "default": {
                                                 "not": {
-                                                    "type": "boolean"
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$comment": "if type == number then default == number",
+                                        "properties": {
+                                            "disable-linting-checks": {
+                                                "not": {
+                                                    "contains": {
+                                                        "const": "ranges"
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "const": "number"
+                                            },
+                                            "default": {
+                                                "not": {
+                                                    "type": "number"
                                                 }
                                             }
                                         }
