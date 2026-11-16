@@ -3,8 +3,10 @@
 program=$(echo "$0" | sed -E 's|.*/||')
 reset='\e[0m'
 
+failed_times=0
 failed_commands=""
-update_applications=false
+open_log_file=false
+update_applications=true
 update_repositories=true
 
 configuration="$(mktemp)"
@@ -12,6 +14,7 @@ configuration="$(mktemp)"
 cli='--help | -h print this help message
 --version | -v print a version of this program
 --just | -j {applications|repositories} update just what is requested (applications or repositories)
+--open | -o open log file with less after completion
 --repositories | -r a path to a directory with repositories to update'
 
 initialize_configuration() {
@@ -36,7 +39,7 @@ color() {
 
     # shellcheck disable=SC2059
     printf "$(echo "$__color_in_text" |
-        sed 's/*\([a-z-]\+\)*/\\e[36m\1\\e[0m/g' |
+        sed 's/*\([0-9A-Za-z._-]\+\)*/\\e[36m\1\\e[0m/g' |
         sed 's|\(\(/[0-9A-Za-z._-]\+\)\+/\?\)|\\e[32m\1\\e[0m|g' |
         sed 's/\(^--\?[a-z]\+ \| --\?[a-z]\+ \| --\?[a-z]\+$\)/\\e[36m\1\\e[0m/g' |
         sed 's/\({[a-z|]\+}\)/\\e[33m\1\\e[0m/g' |
@@ -71,6 +74,7 @@ $cli
 $program --repositories {path}: update not only all apps but also repositories inside specified directory"
 }
 
+# shellcheck disable=SC2069
 run_if_exists() {
     __exists_append_sudo=false
 
@@ -86,9 +90,15 @@ run_if_exists() {
     command -v "$__exists_in_binary" > /dev/null && {
         if [ "$__exists_append_sudo" = true ]; then
             # shellcheck disable=SC2024
-            sudo "$__exists_in_binary" "$@" > "$log" 2> "$log" || failed_commands="$failed_commands, @$__exists_in_binary"
+            sudo "$__exists_in_binary" "$@" >> "$log" 2>&1 || {
+                failed_commands="$failed_commands, *$__exists_in_binary*"
+                failed_times=$((failed_times + 1))
+            }
         else
-            "$__exists_in_binary" "$@" > "$log" 2> "$log" || failed_commands="$failed_commands, @$__exists_in_binary"
+            "$__exists_in_binary" "$@" >> "$log" 2>&1 || {
+                failed_commands="$failed_commands, *$__exists_in_binary*"
+                failed_times=$((failed_times + 1))
+            }
         fi
     }
 }
@@ -147,6 +157,9 @@ while [ $# -gt 0 ]; do
         filter="$(echo "$filter" | sed 's/,/\n/g; s/^ \+\| \+$//g')"
 
         echo "$filter" | while read -r line; do
+            set_configuration_key update_applications false
+            set_configuration_key update_repositories false
+
             if [ "$line" != applications ] && [ "$line" != repositories ]; then
                 highlight "$line"
                 printf ': '
@@ -160,6 +173,9 @@ while [ $# -gt 0 ]; do
         shift
         ;;
 
+    -o | --open)
+        open_log_file=true
+        ;;
     *)
         highlight "$option"
         printf ': '
@@ -228,14 +244,22 @@ echo
 
         color "Trying to update *$(basename "$repository")* via *git-pull*..."
         branches="$(git branch --no-color)"
+        # shellcheck disable=SC2069
         if echo "$branches" | grep -q main; then 
-            git switch -q main | tee "$log" > /dev/null 2> /dev/null
+            git switch main  >> "$log" 2>&1
         elif echo "$branches" | grep -q master; then
-            git switch -q master | tee "$log" > /dev/null 2> /dev/null
+            git switch master >> "$log" 2>&1
         else
             error "there is no main or master branch found"
         fi
 
-        git pull | tee "$log" > /dev/null 2> /dev/null
+        # shellcheck disable=SC2069
+        git pull >> "$log" 2>&1
     done
 }
+
+
+failed_commands="$(echo "$failed_commands" | sed 's/ \+//')"
+[ "$failed_times" -gt 0 ] && color "Failed executing failed_commands commands"
+
+[ "$open_log_file" = true ] && less "$log"
