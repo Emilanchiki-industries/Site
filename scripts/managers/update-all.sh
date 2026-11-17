@@ -13,6 +13,7 @@ configuration="$(mktemp)"
 
 cli='--help | -h print this help message
 --version | -v print a version of this program
+--completion | -C generate bash completion
 --just | -j {applications|repositories} update just what is requested (applications or repositories)
 --open | -o open log file with less after completion
 --repositories | -r a path to a directory with repositories to update'
@@ -137,6 +138,51 @@ while [ $# -gt 0 ]; do
 
     -c | --cli)
         echo "$cli" | sed 's/\(--[^ -]\+\) | \(-[^ -]\) \(.\+\)/\1,\2,\3/g'
+        exit
+        ;;
+
+    -C | --completion)
+        options="$(echo "$cli" |
+            sed 's/\(--[^ -]\+\) | \(-[^ -]\) \(.\+\)/\1 \2/g' |
+            tr '\n' ' ' |
+            sed 's/ $//')"
+        
+        # shellcheck disable=SC1078
+        # shellcheck disable=SC2016
+        printf '
+# shellcheck disable=SC2155
+__update_all_completion() {
+    shopt -s extglob
+    
+    local options="%s"
+    local just_values="applications repositories"
+
+    local previous="${COMP_WORDS[COMP_CWORD - 1]}"
+    local current="${COMP_WORDS[COMP_CWORD]}"
+
+    if [[ "$previous" == @(--just|-j) ]]; then
+        if [[ "$current" == *,* ]]; then
+            local striped_current="$(echo "$current" | sed "s/^.*,//")"
+            local current_before_comma="$(echo "$current" | sed "s/,[^,]*$//")"
+
+            readarray -t COMPREPLY < <(compgen -W "$just_values" -- "$striped_current")
+            local index=0
+            local count="${#COMPREPLY[@]}"
+
+            while [[ "$index" -lt "$count" ]]; do
+                COMPREPLY[$index]="$current_before_comma,${COMPREPLY[$index]}"
+                (( index++ ))
+            done
+        else
+           readarray -t COMPREPLY < <(compgen -W "$just_values" -- "$current") 
+        fi
+    else
+        readarray -t COMPREPLY < <(compgen -W "$options" -- "$current")
+    fi
+}
+
+complete -F __update_all_completion %s
+' "$options" "$program"
         exit
         ;;
 
