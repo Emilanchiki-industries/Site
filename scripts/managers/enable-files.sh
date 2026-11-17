@@ -6,6 +6,7 @@ reset='\e[0m'
 cli='--help | -h print this help message
 --version | -v print a version of this program
 --cli | -c print available options in a parsable {long},{short},{description} format without coloring
+--completion | -C generate bash completion
 --from | -f a directory to input files
 --to | -t a directory where to put symlinks for --from|-f files
 --pattern | -p create symlinks only for files matching this grep pattern, otherwise for none'
@@ -65,6 +66,15 @@ while [ $# -gt 0 ]; do
 
     -c | --cli)
         echo "$cli" | sed 's/\(--[^ -]\+\) | \(-[^ -]\) \(.\+\)/\1,\2,\3/g'
+        exit
+        ;;
+
+    -C | --completion)
+        options="$(echo "$cli" |
+            sed 's/\(--[^ -]\+\) | \(-[^ -]\) \(.\+\)/\1 \2/g' |
+            tr '\n' ' ' |
+            sed 's/ $//')"
+        echo complete -W "\"$options\"" "$program"
         exit
         ;;
 
